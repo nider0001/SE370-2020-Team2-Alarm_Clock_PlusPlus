@@ -24,22 +24,28 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /**
+         * connects the UI to to variables
+         */
         addNewAlarm = findViewById(R.id.addNewAlarmBtn);
         sendNotificationBtn = findViewById(R.id.sendNotificationBtn);
         editNoteText = findViewById(R.id.noteMessage);
         mNotificationHelper = new NotificationHelper(this);
 
+        //waits for user to tap on button
         sendNotificationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //what happened when the user taps button
                 sendNotification(editNoteText.getText().toString());
             }
         });
 
-
+        //waits for user to tap button
         addNewAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //what happens when the user taps button
                 DialogFragment alarmPicker = new alarmPicker();
 
                 alarmPicker.show(getSupportFragmentManager(), "time picker");

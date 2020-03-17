@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,8 @@ public class addAlarm extends AppCompatActivity {
     private TimePicker timePicker;
     private TextView currentTime;
     private TextView alarmTime;
+    private int hr;
+    private int min;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +42,24 @@ public class addAlarm extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                int hr = timePicker.getHour();
-                int min = timePicker.getMinute();
+                //get time from the timePicker
+                hr = timePicker.getHour();
+                min = timePicker.getMinute();
 
-                alarmTime.setText(hr + ":" + min);
+                //creates a bundle to send back to main activity
+                Bundle timeSet = new Bundle();
+                timeSet.putInt("HOUR", hr);
+                timeSet.putInt("MIN", min);
+
+                //creates intent to send back to main activity
+                Intent returnIntent = new Intent();
+                //adds the info form bundle into the intent
+                returnIntent.putExtras(timeSet);
+
+                //sets the type of result when the activity is returned
+                setResult(RESULT_OK, returnIntent);
+                //finish the activity
+                finish();
             }
         });
 

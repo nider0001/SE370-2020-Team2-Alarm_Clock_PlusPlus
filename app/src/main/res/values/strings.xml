@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">TEST ALARM</string>
+    <string name="app_name">RnG_Alarm</string>
+    <string name="title_activity_test">test</string>
 </resources>

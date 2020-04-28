@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">RnG_Alarm</string>
-    <string name="title_activity_test">test</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="alarm_picker_fragment_label">First Fragment</string>
+    <string name="alarm_setting_fragment_label">First Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_alarm_picker_fragment">Hello first fragment</string>
+    <string name="hello_alarm_setting_fragment">Hello first fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

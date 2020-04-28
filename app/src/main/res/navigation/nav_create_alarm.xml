@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_create_alarm"
+    app:startDestination="@id/AlarmPickerFragment">
+
+    <fragment
+        android:id="@+id/AlarmPickerFragment"
+        android:name="com.example.rng_alarm.AlarmPickerFragment"
+        android:label="@string/alarm_picker_fragment_label"
+        tools:layout="@layout/fragment_alarm_picker" >
+
+        <action
+            android:id="@+id/action_PickerFragment_to_SettingFragment"
+            app:destination="@id/AlarmSettingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/AlarmSettingFragment"
+        android:name="com.example.rng_alarm.AlarmSettingFragment"
+        android:label="@string/alarm_setting_fragment_label"
+        tools:layout="@layout/fragment_alarm_setting" >
+
+        <action
+            android:id="@+id/action_SettingFragment_to_PickerFragment"
+            app:destination="@id/AlarmPickerFragment" />
+    </fragment>
+
+</navigation>

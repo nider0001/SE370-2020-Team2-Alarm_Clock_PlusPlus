@@ -33,8 +33,8 @@ public class activeAlarm extends AppCompatActivity {
         alarmSnooze = findViewById(R.id.alarmSnooze);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        timeDisplay.setText(addAlarm.getHour() + ":" + addAlarm.getMin());
-        noteDisplay.setText(addAlarm.getNote());
+        timeDisplay.setText(MainActivity.getAlarmBank().getAlarm(0).getAlarmHour() + ":" + MainActivity.getAlarmBank().getAlarm(0).getAlarmMinutes());
+        noteDisplay.setText(MainActivity.getAlarmBank().getAlarm(0).getAlarmName());
 
         alarmDisable.setOnClickListener(v -> {
             Intent aIntent = new Intent(activeAlarm.this, alarmReceiver.class);
@@ -48,8 +48,8 @@ public class activeAlarm extends AppCompatActivity {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(activeAlarm.this, 0, aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, (addAlarm.getHour() + 300000));
-            calendar.set(Calendar.MINUTE, addAlarm.getMin());
+            calendar.set(Calendar.HOUR_OF_DAY, (MainActivity.getAlarmBank().getAlarm(0).getAlarmHour() + 5));
+            calendar.set(Calendar.MINUTE, MainActivity.getAlarmBank().getAlarm(0).getAlarmMinutes());
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
             MainActivity.ringtone.stop();

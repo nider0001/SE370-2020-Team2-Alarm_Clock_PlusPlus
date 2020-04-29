@@ -73,13 +73,4 @@ public class addAlarm extends AppCompatActivity {
         });
 
     }
-    public static int getHour() {
-        return hour;
-    }
-    public static int getMin() {
-        return min;
-    }
-    public static String getNote() {
-        return note;
-    }
 }

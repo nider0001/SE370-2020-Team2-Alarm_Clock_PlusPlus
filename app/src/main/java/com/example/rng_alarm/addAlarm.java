@@ -5,37 +5,37 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Calendar;
-
 public class addAlarm extends AppCompatActivity {
     private Button addButton;
     private TimePicker timePicker;
-    private TextView currentTime;
     private TextView alarmTime;
-    private int hr;
-    private int min;
+    private EditText alarmNote;
+    private static String note;
+    private static int hour;
+    private static int min;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addalarm);
+        setContentView(R.layout.activity_add_alarm);
 
         addButton = findViewById(R.id.buttonAdd);
-        currentTime = findViewById(R.id.curTime);
+        timePicker = findViewById(R.id.timePicker1);
         timePicker = findViewById(R.id.timePicker1);
         alarmTime = findViewById(R.id.displayAlarmTime);
+        alarmNote = findViewById(R.id.noteAlarm);
+        note = " ";
+        hour = 0;
+        min = 0;
 
-        Calendar c = Calendar.getInstance();
-        final int hour = c.get(Calendar.HOUR_OF_DAY);
-        final int minute = c.get(Calendar.MINUTE);
-
-        currentTime.setText(hour + ":" + minute);
+        //currentTime.setText(hour + ":" + minute);
         alarmTime.setText("--:--");
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -43,13 +43,22 @@ public class addAlarm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //get time from the timePicker
-                hr = timePicker.getHour();
+                hour = timePicker.getHour();
                 min = timePicker.getMinute();
+
+                note = alarmNote.getText().toString();
+
+                if(note.length() <= 0) {
+                    note = " ";
+                }
+
 
                 //creates a bundle to send back to main activity
                 Bundle timeSet = new Bundle();
-                timeSet.putInt("HOUR", hr);
+                timeSet.putInt("HOUR", hour);
                 timeSet.putInt("MIN", min);
+
+                timeSet.putString("NOTE", note);
 
                 //creates intent to send back to main activity
                 Intent returnIntent = new Intent();
@@ -63,5 +72,14 @@ public class addAlarm extends AppCompatActivity {
             }
         });
 
+    }
+    public static int getHour() {
+        return hour;
+    }
+    public static int getMin() {
+        return min;
+    }
+    public static String getNote() {
+        return note;
     }
 }

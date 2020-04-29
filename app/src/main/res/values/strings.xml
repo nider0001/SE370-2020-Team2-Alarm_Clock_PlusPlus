@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">RnG_Alarm</string>
     <string name="title_activity_test">test</string>
+    <string name="title_activity_active_alarm">activeAlarm</string>
 </resources>

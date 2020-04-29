@@ -1,7 +1,6 @@
 package com.example.rng_alarm;
 
 import android.app.Activity;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -24,13 +23,16 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     public static Ringtone ringtone;
 
+    private TextView alarmNumber;
     private EditText editNoteText;
     private Button sendNotificationBtn;
     private Button addNewAlarm;
     private TextView textViewer;
-    private int pendingIntentCF = 0;
+    private TextView textViewer2;
     private int launchTimePicker = 1; //request code
     private NotificationHelper mNotificationHelper;
+    private static AlarmBank alarmBank = new AlarmBank();
+
 
     public AlarmManager alarmManager;
     private PendingIntent pendingIntent;
@@ -45,14 +47,14 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
           connects the UI to to variables by ID
          */
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Intent aIntent = new Intent(MainActivity.this, alarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         addNewAlarm = findViewById(R.id.addNewAlarmBtn);
         sendNotificationBtn = findViewById(R.id.sendNotificationBtn);
         editNoteText = findViewById(R.id.noteMessage);
         mNotificationHelper = new NotificationHelper(this);
         textViewer = findViewById(R.id.textViewer);
+        textViewer2 = findViewById(R.id.textViewer2);
+        alarmNumber = findViewById(R.id.alarmNum);
 
         mCancelAlarm = new activeAlarm();
 
@@ -122,9 +124,22 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setAlarm(int hour, int minute, String note) {
+
+
+        Intent aIntent = new Intent(MainActivity.this, alarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+        Alarm newAlarm = new Alarm();
+        newAlarm.setAlarmTime(hour, minute);
+        newAlarm.setAlarmName(note);
+        alarmBank.addNewAlarmToBank(newAlarm);
+
+        alarmNumber.setText("Alarm: " + alarmBank.getAlarmBankCount());
     }
+    public static AlarmBank getAlarmBank() { return alarmBank; }
 }

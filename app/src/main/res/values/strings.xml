@@ -1,5 +1,36 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RnG_Alarm</string>
     <string name="title_activity_test">test</string>
     <string name="title_activity_active_alarm">activeAlarm</string>
+    <string name="send_note">Send Notification</string>
+    <string name="alarms">Alarms:</string>
+    <string name="add_new_alarm">Add New Alarm</string>
+    <string name="time">time</string>
+
+    <string name="note">Note</string>
+    <string name="snooze">SNOOZE</string>
+    <string name="textview">TextView</string>
+    <string name="textview2">TextView</string>
+    <string name="disable">DISABLE</string>
+    <string name="date_time">Date Time</string>
+    <string name="add">ADD</string>
+    <string name="alarm_time">Alarm Time:</string>
+    <string name="alarmtime">alarmTime</string>
+    <string name="note2">Note:</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>

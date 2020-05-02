@@ -4,11 +4,8 @@
 
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/colorUV"
-    android:id="@+id/uvbarID"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
-
-
-
-
+    android:background="@color/colorWood"
+    android:id="@+id/toolbarID"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    >
 </androidx.appcompat.widget.Toolbar>

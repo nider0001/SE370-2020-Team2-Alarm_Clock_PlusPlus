@@ -26,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            toolbar= findViewById(R.id.uvbarID);
+            toolbar= findViewById(R.id.toolbarID);
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("RnG_Alarm Settings");
 

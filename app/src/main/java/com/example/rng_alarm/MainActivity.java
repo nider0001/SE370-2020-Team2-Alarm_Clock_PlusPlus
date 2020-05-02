@@ -26,8 +26,8 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
-    //UVBAR
-    private Toolbar UVtoolbar;
+    //This is
+    private Toolbar myToolbar;
 
 
     public static Ringtone ringtone;
@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         setContentView(R.layout.activity_main);
 
         //UVBAR
-        UVtoolbar=findViewById(R.id.uvbarID);
-        setSupportActionBar(UVtoolbar);
+        myToolbar=findViewById(R.id.toolbarID);
+        setSupportActionBar(myToolbar);
 
 
         /*
@@ -96,10 +96,10 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
 
     }
     @Override
-    public boolean onCreateOptionsMenu(Menu uvmenu)
+    public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.uvmenu,uvmenu);
+        inflater.inflate(R.menu.menu,menu);
         return true;
     }
 

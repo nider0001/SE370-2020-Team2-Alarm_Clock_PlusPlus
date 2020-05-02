@@ -30,8 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:numbersSelectorColor="@color/colorUV"
-        android:amPmTextColor="@color/colorUV"
+        android:numbersSelectorColor="@color/colorWood"
+        android:amPmTextColor="@color/colorWood"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include2" />

@@ -3,7 +3,7 @@ package com.example.rng_alarm;
 /*********************************************************************
  *  File            : AlarmBank
  *  Created         : 22-March-2020
- *  Last Changed/By : 01-May-2020 / Eric Hernandez
+ *  Last Changed/By : 02-May-2020 / Eric Hernandez
  *  Author          : Eric Hernandez
  *
  *  Purpose: Builds the list of all alarms, whether we decide to 
@@ -16,6 +16,7 @@ public class AlarmBank {
     // private ArrayList<Alarm> bank = new ArrayList<Alarm>();
     LinkedList<Alarm> Bank = new LinkedList<Alarm>();
     LinkedList<Alarm> Active = new LinkedList<Alarm>();
+    LinkedList<Alarm> Inactive = new LinkedList<Alarm>();
 
     /**
      * DEFINITION:  Adds a new alarm to the List
@@ -36,6 +37,9 @@ public class AlarmBank {
         if (name.getAlarmActiveStatus() == true) {
             Active.add(name);
         }
+        else {
+            Inactive.add(name);
+        }
     }
 
     /**
@@ -46,10 +50,17 @@ public class AlarmBank {
         return Bank.size();
     }
 
-
     /**
      * DEFINITION:  Returns the requested alarm from the bank
      * PARAMETERS:  None
      **/
     public Alarm getAlarm(int index) { return Bank.get(index); }
+
+    /**
+     * DEFINITION:  Returns the full list of alarms
+     * PARAMETERS:  None
+     **/
+    public LinkedList<Alarm> getAlarmBank() {
+        return Bank;
+    }
 }

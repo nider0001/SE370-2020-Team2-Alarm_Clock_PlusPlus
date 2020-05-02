@@ -28,10 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
     //This is
     private Toolbar myToolbar;
-
-
-    public static Ringtone ringtone;
-
     private TextView alarmNumber;
     private EditText editNoteText;
     private Button sendNotificationBtn;
@@ -41,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private NotificationHelper mNotificationHelper;
     private static AlarmBank alarmBank = new AlarmBank();
     private TextView texCurrDateTime;
+
+    public static Ringtone ringtone;
 
     // Create calendar object, get current date
     Calendar calendar = Calendar.getInstance();

@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //UVBAR
         myToolbar=findViewById(R.id.toolbarID);
         setSupportActionBar(myToolbar);
 

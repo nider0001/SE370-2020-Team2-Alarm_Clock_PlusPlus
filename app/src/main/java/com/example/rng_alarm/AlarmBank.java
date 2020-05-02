@@ -3,43 +3,64 @@ package com.example.rng_alarm;
 /*********************************************************************
  *  File            : AlarmBank
  *  Created         : 22-March-2020
- *  Last Changed/By : 22-March-2020 / Eric Hernandez
+ *  Last Changed/By : 02-May-2020 / Eric Hernandez
  *  Author          : Eric Hernandez
  *
  *  Purpose: Builds the list of all alarms, whether we decide to 
  *           use LL, vectors, or arrays
  *********************************************************************/
-import java.util.ArrayList; // import the ArrayList class
+import java.util.*; // Needed for linked list
 
 public class AlarmBank {
     /****** Private members ******/
-    private ArrayList<Alarm> bank = new ArrayList<Alarm>();
+    // private ArrayList<Alarm> bank = new ArrayList<Alarm>();
+    LinkedList<Alarm> Bank = new LinkedList<Alarm>();
+    LinkedList<Alarm> Active = new LinkedList<Alarm>();
+    LinkedList<Alarm> Inactive = new LinkedList<Alarm>();
 
     /**
-     * DEFINITION:  Adds a new alarm to the Array List
-     * PARAMETERS:  
+     * DEFINITION:  Adds a new alarm to the List
+     * PARAMETERS:  Takes in alarm element 'name'
      **/
     public void addNewAlarmToBank(Alarm name) {
         // Add alarm to bank
-        bank.add(name);
+        Bank.add(name);
+        isAlarmActive(name);
     }
 
     /**
-     * DEFINITION:  Modifies a specified ArrayList element <-- This is future stuff
-     * PARAMETERS:  
+     * DEFINITION:  Determines if alarm is active or not and stores accordingly
+     * PARAMETERS:  Takes in alarm element
      **/
+    public void isAlarmActive(Alarm name){
+        // Determine the status of alarm
+        if (name.getAlarmActiveStatus() == true) {
+            Active.add(name);
+        }
+        else {
+            Inactive.add(name);
+        }
+    }
 
     /**
-     * DEFINITION:  Removes a specified ArrayList element <-- This is future stuff
-     * PARAMETERS:  
-     **/
-
-    /**
-     * DEFINITION:  Returns the size of the Arraylist
+     * DEFINITION:  Returns the size of the alarm bank
      * PARAMETERS:  None
      **/
     public int getAlarmBankCount() {
-        return bank.size();
+        return Bank.size();
     }
-    public Alarm getAlarm(int index) { return bank.get(index); }
+
+    /**
+     * DEFINITION:  Returns the requested alarm from the bank
+     * PARAMETERS:  None
+     **/
+    public Alarm getAlarm(int index) { return Bank.get(index); }
+
+    /**
+     * DEFINITION:  Returns the full list of alarms
+     * PARAMETERS:  None
+     **/
+    public LinkedList<Alarm> getAlarmBank() {
+        return Bank;
+    }
 }

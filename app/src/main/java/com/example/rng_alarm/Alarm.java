@@ -1,7 +1,7 @@
 /*********************************************************************
  *  File            : Alarm
  *  Created         : 27-Feb-2020
- *  Last Changed/By : 23-Mar-2020 / Eric Hernandez
+ *  Last Changed/By : 01-May-2020 / Eric Hernandez
  *  Author          : Eric Hernandez
  *
  *  Purpose: Alarm class is a super class where I plan on storing all
@@ -9,36 +9,32 @@
  *********************************************************************/
 
 package com.example.rng_alarm;
-// import java.util.Calendar; // For date
-// import android.app.AlarmManager; // For all things alarm in android
-
-
-/******************************
- * State of alarm
- *  - Is either off or on
- ******************************/
-enum Status {
-    ON, OFF
-}
 
 public class Alarm {
     /****** Private members ******/
     private int alarm_hour; // hour in 24hr time format
     private int alarm_minutes;
     private String alarm_name; // Name of the alarm
-    // private String alarm_sound;
-    // private int alarm_index = -1; // Alarm #
-    // private int alarm_on_index = 0; // Future tripping bro..
-    // private int alarm_off_index = 0; // Future tripping bro..
+    private boolean active; // Set to true if alarm is active
 
 
-    /******** Constructor *******/
+    /******** Default Constructor *******/
     public Alarm() {
+        // Create blank Alarm
         alarm_hour = 0;
         alarm_minutes = 0;
         alarm_name = "";
-        // alarm_index++;
+        active = true;
     }
+
+    /******** Constructor *******/
+    public Alarm(int key, int hour, int minutes, String name) {
+        // Initializing constructor to create Alarm object
+        alarm_hour = hour;
+        alarm_minutes = minutes;
+        alarm_name = name;
+    }
+
 
     /********** Mutator **********/
 
@@ -66,12 +62,12 @@ public class Alarm {
     }
 
     /**
-     * DEFINITION:  Sets alarm sound.
-     * PARAMETERS:  String path of the sound
+     * DEFINITION:  Sets alarm status on or off
+     * PARAMETERS:
      **/
-    // void setAlarmSound(String sound) {
-    //     this.alarm_sound = sound;
-    // }
+     void toggleAlarm() {
+         active = !active;
+     }
 
     /********* Accessors *********/
     /**
@@ -100,12 +96,9 @@ public class Alarm {
     }
 
     /**
-     * DEFINITION:  Returns the alarm alart sound
+     * DEFINITION:  Returns the the status of Alarm
      * PARAMETERS:  None
      **/
-    // String getAlarmSound() {
-    //     return alarm_sound;
-    // }
-
+     boolean getAlarmActiveStatus() { return active; }
 }
 

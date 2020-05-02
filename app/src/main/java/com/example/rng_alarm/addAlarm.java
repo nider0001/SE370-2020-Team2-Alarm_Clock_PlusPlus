@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class addAlarm extends AppCompatActivity {
     private Button addButton;
     private TimePicker timePicker;
-    private TextView alarmTime;
     private EditText alarmNote;
     private static String note;
     private static int hour;
@@ -29,14 +28,11 @@ public class addAlarm extends AppCompatActivity {
         addButton = findViewById(R.id.buttonAdd);
         timePicker = findViewById(R.id.timePicker1);
         timePicker = findViewById(R.id.timePicker1);
-        alarmTime = findViewById(R.id.displayAlarmTime);
         alarmNote = findViewById(R.id.noteAlarm);
         note = " ";
         hour = 0;
         min = 0;
 
-        //currentTime.setText(hour + ":" + minute);
-        alarmTime.setText("--:--");
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)

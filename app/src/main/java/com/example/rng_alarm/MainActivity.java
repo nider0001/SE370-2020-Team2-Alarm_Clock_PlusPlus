@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
     private Button sendNotificationBtn;
     private Button addNewAlarm;
     private TextView textViewer;
-    private TextView textViewer2;
     private int launchTimePicker = 1; //request code
     private NotificationHelper mNotificationHelper;
     private static AlarmBank alarmBank = new AlarmBank();
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         editNoteText = findViewById(R.id.noteMessage);
         mNotificationHelper = new NotificationHelper(this);
         textViewer = findViewById(R.id.textViewer);
-        textViewer2 = findViewById(R.id.textViewer2);
         alarmNumber = findViewById(R.id.alarmNum);
 
         mCancelAlarm = new activeAlarm();
@@ -102,17 +100,19 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
             if (resultCode == Activity.RESULT_OK) {
                 int hour = 0;
                 int minute = 0;
-                String note;
+//                String note;
 
                 //this grabs the data that was bundle in the addAlarm activity
                 hour = data.getIntExtra("HOUR", hour);
                 minute = data.getIntExtra("MIN", minute);
-                note = data.getStringExtra("NOTE");
+//                note = data.getStringExtra("NOTE");
 
-                String newTime = hour + ":" + minute + "\n" + note;
+//                String newTime = hour + ":" + minute + "\n" + note;
+                String newTime = hour + ":" + minute;
                 textViewer.setText(newTime);
 
-                setAlarm(hour, minute, note);
+//                setAlarm(hour, minute, note);
+                setAlarm(hour, minute);
             }
             //if the activity was not completed
             if (resultCode == Activity.RESULT_CANCELED) {
@@ -123,7 +123,8 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
     }//onActivityResult
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void setAlarm(int hour, int minute, String note) {
+    private void setAlarm(int hour, int minute) {
+//    private void setAlarm(int hour, int minute, String note) {
 
 
         Intent aIntent = new Intent(MainActivity.this, alarmReceiver.class);
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
 
         Alarm newAlarm = new Alarm();
         newAlarm.setAlarmTime(hour, minute);
-        newAlarm.setAlarmName(note);
+//        newAlarm.setAlarmName(note);
         alarmBank.addNewAlarmToBank(newAlarm);
 
         alarmNumber.setText("Alarm: " + alarmBank.getAlarmBankCount());

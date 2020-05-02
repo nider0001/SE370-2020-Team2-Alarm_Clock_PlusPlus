@@ -21,6 +21,7 @@ public class addAlarm extends AppCompatActivity {
     private static int hour;
     private static int min;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -4,65 +4,111 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/noteMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Note"
-        app:layout_constraintBottom_toTopOf="@+id/addNewAlarmBtn"
-        app:layout_constraintTop_toBottomOf="@+id/textViewer"
-        app:layout_constraintVertical_bias="0.707"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <TextView
-        android:id="@+id/textViewer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="time"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/addNewAlarmBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.197" />
-
-    <TextView
-        android:id="@+id/textViewer2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="time"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/addNewAlarmBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.496" />
 
     <Button
         android:id="@+id/addNewAlarmBtn"
         android:layout_width="237dp"
         android:layout_height="42dp"
-        android:text="Add New Alarm"
+        android:text="add a new alarm"
         android:textAllCaps="true"
         android:textSize="15sp"
         android:textStyle="bold"
         android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noteMessage"
+        app:layout_constraintVertical_bias="1.0" />
+
+
+    <include
+        layout="@layout/uvbar"
+        app:layout_constraintBottom_toBottomOf="@+id/addNewAlarmBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.90999997" />
+        app:layout_constraintVertical_bias="0.023" />
+
+    <EditText
+        android:id="@+id/noteMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/note"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.811"
+        android:autofillHints="Note"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/text_currDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="@string/date_time"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btn_createAlarm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.486" />
+
+    <DigitalClock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btn_createAlarm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_currDateTime"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/textViewer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewer2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.735" />
+
+    <TextView
+        android:id="@+id/textViewer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.328" />
+
+
 
     <Button
         android:id="@+id/sendNotificationBtn"
         android:layout_width="237dp"
         android:layout_height="42dp"
-        android:layout_marginTop="53dp"
-        android:layout_marginBottom="32dp"
-        android:text="Send Note"
+        android:layout_marginTop="8dp"
+        android:text="@string/send_note"
         android:textAllCaps="true"
         android:textSize="15sp"
         android:textStyle="bold"
@@ -71,19 +117,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/noteMessage"
-        app:layout_constraintVertical_bias="0.68" />
+        app:layout_constraintVertical_bias="0.421" />
 
     <TextView
         android:id="@+id/alarmNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alarms:"
+        android:text="@string/alarms"
         app:layout_constraintBottom_toTopOf="@+id/textViewer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16000003" />
+        app:layout_constraintVertical_bias="0.897" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,11 +18,18 @@ import android.widget.TimePicker;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+
+    //This is
+    private Toolbar myToolbar;
+
+
     public static Ringtone ringtone;
 
     private TextView alarmNumber;
@@ -32,6 +41,11 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
     private int launchTimePicker = 1; //request code
     private NotificationHelper mNotificationHelper;
     private static AlarmBank alarmBank = new AlarmBank();
+    private TextView texCurrDateTime;
+
+    // Create calendar object, get current date
+    Calendar calendar = Calendar.getInstance();
+    String currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
 
 
     public AlarmManager alarmManager;
@@ -43,12 +57,19 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //UVBAR
+        myToolbar=findViewById(R.id.toolbarID);
+        setSupportActionBar(myToolbar);
+
+
         /*
           connects the UI to to variables by ID
          */
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         addNewAlarm = findViewById(R.id.addNewAlarmBtn);
+        texCurrDateTime = findViewById(R.id.text_currDateTime);
+        texCurrDateTime.setText(currentDate);
         sendNotificationBtn = findViewById(R.id.sendNotificationBtn);
         editNoteText = findViewById(R.id.noteMessage);
         mNotificationHelper = new NotificationHelper(this);
@@ -70,6 +91,16 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
             //what happens when the user taps button
             openAddAlarmActivity();
         });
+
+
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+        return true;
     }
 
     public void openAddAlarmActivity() {

@@ -30,9 +30,9 @@ public class activeAlarm extends AppCompatActivity {
         setContentView(R.layout.activity_active_alarm);
 
         timeDisplay = findViewById(R.id.alarmTimeDisplay);
-        noteDisplay = findViewById(R.id.alarmNoteDisplay);
-        alarmDisable = findViewById(R.id.alarmDisable);
-        alarmSnooze = findViewById(R.id.alarmSnooze);
+        noteDisplay = findViewById(R.id.text_alarmName);
+        alarmDisable = findViewById(R.id.btn_disable);
+        alarmSnooze = findViewById(R.id.btn_snooze);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         // Create calendar object, get current date

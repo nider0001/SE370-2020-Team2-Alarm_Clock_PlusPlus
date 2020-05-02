@@ -36,33 +36,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include2" />
 
-    <TextView
-        android:id="@+id/alarmTimeDisplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/alarm_time"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/noteAlarm"
-        app:layout_constraintEnd_toStartOf="@+id/displayAlarmTime"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/displayAlarmTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/alarmtime"
-        app:layout_constraintBottom_toTopOf="@+id/noteAlarm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.635"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <EditText
-        android:id="@+id/noteAlarm"
+        android:id="@+id/text_alarmName"
         android:layout_width="214dp"
         android:layout_height="42dp"
-        android:layout_marginBottom="16dp"
-        android:hint="Type your alarm's title here!"
+        android:layout_marginBottom="48dp"
+        android:hint="Name"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
         app:layout_constraintEnd_toEndOf="parent"

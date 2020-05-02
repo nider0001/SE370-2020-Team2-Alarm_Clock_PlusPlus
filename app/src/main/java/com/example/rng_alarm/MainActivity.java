@@ -24,7 +24,7 @@ import androidx.core.app.NotificationCompat;
 import java.text.DateFormat;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public class MainActivity extends AppCompatActivity {
 
     //This is
     private Toolbar myToolbar;
@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
     private Button sendNotificationBtn;
     private Button addNewAlarm;
     private TextView textViewer;
-    private TextView textViewer2;
     private int launchTimePicker = 1; //request code
     private NotificationHelper mNotificationHelper;
     private static AlarmBank alarmBank = new AlarmBank();
@@ -74,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         editNoteText = findViewById(R.id.noteMessage);
         mNotificationHelper = new NotificationHelper(this);
         textViewer = findViewById(R.id.textViewer);
-        textViewer2 = findViewById(R.id.textViewer2);
         alarmNumber = findViewById(R.id.alarmNum);
 
         mCancelAlarm = new activeAlarm();
@@ -95,10 +93,11 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
 
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        MenuInflater inflater=getMenuInflater();
+        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu,menu);
         return true;
     }
@@ -114,13 +113,6 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
     public void sendNotification(String message) {
         NotificationCompat.Builder nb = mNotificationHelper.getChannelNotification(message);
         mNotificationHelper.getManager().notify(1, nb.build());
-    }
-
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        TextView textView = findViewById(R.id.textViewer);
-        String newTime = "Hour: " + hourOfDay + " Minute: " + minute;
-        textView.setText(newTime);
     }
 
     //this function gets executed when the startActivityForResult finishes

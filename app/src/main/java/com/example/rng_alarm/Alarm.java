@@ -13,14 +13,6 @@ package com.example.rng_alarm;
 // import android.app.AlarmManager; // For all things alarm in android
 
 
-/******************************
- * State of alarm
- *  - Is either off or on
- ******************************/
-enum Status {
-    ON, OFF
-}
-
 public class Alarm {
     /****** Private members ******/
     private int alarm_hour; // hour in 24hr time format

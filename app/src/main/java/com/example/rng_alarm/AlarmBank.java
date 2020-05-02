@@ -25,21 +25,16 @@ public class AlarmBank {
     }
 
     /**
-     * DEFINITION:  Modifies a specified ArrayList element <-- This is future stuff
-     * PARAMETERS:  
-     **/
-
-    /**
-     * DEFINITION:  Removes a specified ArrayList element <-- This is future stuff
-     * PARAMETERS:  
-     **/
-
-    /**
      * DEFINITION:  Returns the size of the Arraylist
      * PARAMETERS:  None
      **/
     public int getAlarmBankCount() {
         return bank.size();
     }
+
+    /**
+     * DEFINITION:  Returns the size of the Arraylist
+     * PARAMETERS:  None
+     **/
     public Alarm getAlarm(int index) { return bank.get(index); }
 }

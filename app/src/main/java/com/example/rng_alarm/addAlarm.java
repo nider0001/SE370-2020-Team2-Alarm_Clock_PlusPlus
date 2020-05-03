@@ -7,7 +7,6 @@
  *  Purpose:
  *********************************************************************/
 package com.example.rng_alarm;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -27,11 +26,9 @@ public class addAlarm extends AppCompatActivity {
     private static int min;
 
     // Create new alarm object
-    private Alarm NewAlarm = new Alarm();
+    private Alarm NewAlarm;
     private static int defaultNameCount = 1;
 
-    // Static alarmBank to store each alarm
-    private static AlarmBank Bank = new AlarmBank();
 
 
     @Override
@@ -66,10 +63,12 @@ public class addAlarm extends AppCompatActivity {
                     defaultNameCount++;
                 }
                 // Set all alarm attributes
-                setAlarmAttributes(name,hour,min);
+                //setAlarmAttributes(name,hour,min);
+
+                NewAlarm = new Alarm(hour, min, name);
 
                 // Send to bank
-                Bank.addNewAlarmToBank(NewAlarm);
+                AlarmBank.Bank.add(NewAlarm);
 
                 finish();
             }
@@ -81,7 +80,6 @@ public class addAlarm extends AppCompatActivity {
      * PARAMETERS:  Name, hour, minutes
      **/
      void setAlarmAttributes(String name, int hour, int min) {
-         NewAlarm.setAlarmName(name);
-         NewAlarm.setAlarmTime(hour, min);
+
      }
 }

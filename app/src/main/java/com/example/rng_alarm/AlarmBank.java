@@ -12,31 +12,32 @@ import java.util.*; // Needed for linked list
 
 public class AlarmBank {
     /****** Private members ******/
-    private static LinkedList<Alarm> Bank = new LinkedList<Alarm>();
+    public static LinkedList<Alarm> Bank = new LinkedList<Alarm>();
     private static LinkedList<Alarm> Active = new LinkedList<Alarm>();
     private static LinkedList<Alarm> Inactive = new LinkedList<Alarm>();
+
 
     /**
      * DEFINITION:  Adds a new alarm to the List
      * PARAMETERS:  Takes in alarm element 'name'
      **/
-    public void addNewAlarmToBank(Alarm name) {
+    public static void addNewAlarmToBank(Alarm newAlarm) {
         // Add alarm to bank
-        Bank.add(name);
-        isAlarmActive(name);
+        Bank.add(newAlarm);
+        isAlarmActive(newAlarm);
     }
 
     /**
      * DEFINITION:  Determines if alarm is active or not and stores accordingly
      * PARAMETERS:  Takes in alarm element
      **/
-    public void isAlarmActive(Alarm name){
+    public static void isAlarmActive(Alarm alarm){
         // Determine the status of alarm
-        if (name.getAlarmActiveStatus() == true) {
-            Active.add(name);
+        if (alarm.getAlarmActiveStatus() == true) {
+            Active.add(alarm);
         }
         else {
-            Inactive.add(name);
+            Inactive.add(alarm);
         }
     }
 
@@ -48,9 +49,11 @@ public class AlarmBank {
 
     /**
      * DEFINITION:  Returns the first alarm in the bank
-     * PARAMETERS:  None
+     * PARAMETERS:
      **/
-    public Alarm getAlarm() { return Bank.getFirst(); }
+    public static Alarm getAlarm() {
+        return Bank.getLast();
+    }
 
     /**
      * DEFINITION:  Returns the full list of alarms
@@ -61,6 +64,23 @@ public class AlarmBank {
     /**
      * DEFINITION:  Returns the full list of active alarms
      * PARAMETERS:  None
+     *
      **/
-    public LinkedList<Alarm> getActiveAlarmBank() { return Active; }
+    public static LinkedList<Alarm> getActiveAlarmBank() { return Active; }
+
+    public static Alarm getAlarmByRequestCode(int requestCode) {
+        for(int i = 0; i < Active.size(); i++)
+        {
+            if(Active.get(i).getId() == requestCode)
+            {
+                return Active.get(i);
+            }
+            else {
+                continue;
+            }
+
+        }
+        return Active.getFirst();
+    }
+
 }

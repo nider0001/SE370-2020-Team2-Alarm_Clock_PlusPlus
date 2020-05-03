@@ -18,16 +18,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.LinkedList;
 
 public class activeAlarm extends AppCompatActivity {
 
-    private TextView timeDisplay;
     private TextView text_alarmName;
     private FloatingActionButton alarmDisable;
     private FloatingActionButton alarmSnooze;
     private AlarmManager alarmManager;
     private TextView texCurrDateTime;
-    private Alarm ActiveAlarm = new Alarm();
+    private Alarm ActiveAlarm;
+    private LinkedList<Alarm> Bank;
+    private int requestCode = -1;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -35,34 +37,47 @@ public class activeAlarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_alarm);
 
-        timeDisplay = findViewById(R.id.alarmTimeDisplay);
         text_alarmName = findViewById(R.id.text_alarmName);
         alarmDisable = findViewById(R.id.btn_disable);
         alarmSnooze = findViewById(R.id.btn_snooze);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         // Get the active alarm
-        ActiveAlarm = MainActivity.getActiveAlarm();
+        Bank = AlarmBank.getActiveAlarmBank();
+        ActiveAlarm = Bank.getFirst();
+
+        requestCode = ActiveAlarm.getId();
 
         // Create calendar object, get current date
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
         texCurrDateTime = findViewById(R.id.text_currDateTime2);
-        texCurrDateTime.setText(currentDate);
+        //texCurrDateTime.setText(currentDate);
+        texCurrDateTime.setText("ID: " + requestCode);
 
-        timeDisplay.setText(ActiveAlarm.getAlarmHour() + ":" + ActiveAlarm.getAlarmMinutes());
-        text_alarmName.setText(ActiveAlarm.getAlarmName());
+        Intent aIntent = new Intent(activeAlarm.this, alarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(activeAlarm.this,
+                requestCode , aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        text_alarmName.setText(AlarmBank.getAlarmByRequestCode(requestCode).getAlarmName());
 
         /**
          * DEFINITION:  Event driven function disables active alarm
-         * PARAMETERS:
+         * PARAMETERS:Intent aIntent = new Intent(activeAlarm.this, alarmReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(activeAlarm.this,
+                   requestCode , aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
          **/
         alarmDisable.setOnClickListener(v -> {
-            Intent aIntent = new Intent(activeAlarm.this, alarmReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(activeAlarm.this,
-                    0, aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            //moves alarm back
+            Bank.removeFirst();
+            Bank.addLast(ActiveAlarm);
+
             alarmManager.cancel(pendingIntent);
             MainActivity.ringtone.stop();
+
+
+
             finish();
         });
 
@@ -71,9 +86,10 @@ public class activeAlarm extends AppCompatActivity {
          * PARAMETERS:
          **/
         alarmSnooze.setOnClickListener(v -> {
-            Intent aIntent = new Intent(activeAlarm.this, alarmReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(activeAlarm.this,
-                    0, aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            //moves alarm back
+            Bank.removeFirst();
+            Bank.addLast(ActiveAlarm);
 
             Calendar calendar2 = Calendar.getInstance();
             calendar2.set(Calendar.HOUR_OF_DAY, (ActiveAlarm.getAlarmHour()));

@@ -16,7 +16,8 @@ public class Alarm {
     private int alarm_minutes;
     private String alarm_name; // Name of the alarm
     private boolean active; // Set to true if alarm is active
-
+    private static int count = 0;
+    private int id = 0;
 
     /******** Default Constructor *******/
     public Alarm() {
@@ -25,14 +26,17 @@ public class Alarm {
         alarm_minutes = 0;
         alarm_name = "";
         active = true;
+        setId(count++);
     }
 
     /******** Constructor *******/
-    public Alarm(int key, int hour, int minutes, String name) {
+    public Alarm(int hour, int minutes, String name) {
         // Initializing constructor to create Alarm object
         alarm_hour = hour;
         alarm_minutes = minutes;
         alarm_name = name;
+        active = true;
+        this.setId(count++);
     }
 
 
@@ -59,6 +63,13 @@ public class Alarm {
         else {
             // Also need some sort of error message here
         }
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getId() {
+        return id;
     }
 
     /**

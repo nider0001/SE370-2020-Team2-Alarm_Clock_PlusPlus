@@ -41,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
     private NotificationHelper mNotificationHelper;
     private TextView texCurrDateTime;
     private PendingIntent pendingIntent;
+    private TextView alarm1;
+    private TextView alarm2;
 
     // Create AlarmBank and Alarm objects
-    private static AlarmBank Bank = new AlarmBank();
-    private Alarm NewAlarm = new Alarm();
+    private Alarm NewAlarm;
     private static LinkedList<Alarm> AlarmList = new LinkedList<Alarm>();
 
     /****** Public members ******/
@@ -74,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
         sendNotificationBtn = findViewById(R.id.sendNotificationBtn);
         editNoteText = findViewById(R.id.noteMessage);
         mNotificationHelper = new NotificationHelper(this);
+
+        alarm1 = findViewById(R.id.alarmView1);
+        alarm2 = findViewById(R.id.alarmView2);
 
         /**
          * DEFINITION:  Event driven function sends notifications
@@ -154,14 +158,17 @@ public class MainActivity extends AppCompatActivity {
     private void setAlarm() {
 
         // Retrieve the active alarm bank and get the first alarm
-        Bank.getActiveAlarmBank();
-        NewAlarm = Bank.getAlarm();
+        AlarmList = AlarmBank.getActiveAlarmBank();
+        NewAlarm = AlarmBank.getAlarm();
+        AlarmBank.addNewAlarmToBank(NewAlarm);
 
+        int requestCode = NewAlarm.getId();
         int hour = NewAlarm.getAlarmHour();
         int minute = NewAlarm.getAlarmMinutes();
 
+        alarm2.setText("H: " + hour + " M: " + minute + " rc: " + requestCode);
         Intent aIntent = new Intent(MainActivity.this, alarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0,
+        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, requestCode,
                 aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
@@ -171,10 +178,4 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
-    /**
-     * DEFINITION:  Returns the activated alarm
-     * PARAMETERS:  None
-     **/
-    // Need to return the active alarm
-    public static Alarm getActiveAlarm() { return Bank.getAlarm(); }
 }

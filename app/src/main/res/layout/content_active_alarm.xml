@@ -9,13 +9,6 @@
     tools:layout_editor_absoluteY="56dp"
     tools:showIn="@layout/activity_active_alarm">
 
-    <!--    <include-->
-    <!--        layout="@layout/uvbar"-->
-    <!--        app:layout_constraintBottom_toBottomOf="@+id/addNewAlarmBtn"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <TextView
         android:id="@+id/text_currDateTime2"
         android:layout_width="wrap_content"

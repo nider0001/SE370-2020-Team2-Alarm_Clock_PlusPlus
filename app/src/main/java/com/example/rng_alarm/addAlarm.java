@@ -1,5 +1,12 @@
+/*********************************************************************
+ *  File            : addAlarm
+ *  Created         :
+ *  Last Changed/By : 02-May-2020 / Eric Hernandez
+ *  Author          : Alex Nider
+ *
+ *  Purpose:
+ *********************************************************************/
 package com.example.rng_alarm;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,11 +26,12 @@ public class addAlarm extends AppCompatActivity {
     private static int hour;
     private static int min;
 
-//    private Alarm NewAlarm = new Alarm();
+    // Create new alarm object
+    private Alarm NewAlarm = new Alarm();
     private static int defaultNameCount = 1;
 
     // Static alarmBank to store each alarm
-//    private static AlarmBank Bank = new AlarmBank();
+    private static AlarmBank Bank = new AlarmBank();
 
 
     @Override
@@ -39,7 +47,10 @@ public class addAlarm extends AppCompatActivity {
         hour = 0;
         min = 0;
 
-
+        /**
+         * DEFINITION:  Event driven function creates a new alarm and stores in bank
+         * PARAMETERS:  None
+         **/
         addButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -55,30 +66,14 @@ public class addAlarm extends AppCompatActivity {
                     defaultNameCount++;
                 }
                 // Set all alarm attributes
-//                setAlarmAttributes(name,hour,min);
+                setAlarmAttributes(name,hour,min);
 
                 // Send to bank
-//                Bank.addNewAlarmToBank(NewAlarm);
+                Bank.addNewAlarmToBank(NewAlarm);
 
-                //creates a bundle to send back to main activity
-                Bundle timeSet = new Bundle();
-                timeSet.putInt("HOUR", hour);
-                timeSet.putInt("MIN", min);
-
-                timeSet.putString("NOTE", name);
-
-                //creates intent to send back to main activity
-                Intent returnIntent = new Intent();
-                //adds the info form bundle into the intent
-                returnIntent.putExtras(timeSet);
-
-                //sets the type of result when the activity is returned
-                setResult(RESULT_OK, returnIntent);
-                //finish the activity
                 finish();
             }
         });
-
     }
 
     /**
@@ -86,7 +81,7 @@ public class addAlarm extends AppCompatActivity {
      * PARAMETERS:  Name, hour, minutes
      **/
      void setAlarmAttributes(String name, int hour, int min) {
-//         NewAlarm.setAlarmName(name);name
-//         NewAlarm.setAlarmTime(hour, min);
+         NewAlarm.setAlarmName(name);
+         NewAlarm.setAlarmTime(hour, min);
      }
 }

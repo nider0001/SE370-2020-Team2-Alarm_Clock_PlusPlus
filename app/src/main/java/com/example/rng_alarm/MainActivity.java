@@ -1,9 +1,15 @@
+/*********************************************************************
+ *  File            : MainActivity
+ *  Created         :
+ *  Last Changed/By : 02-May-2020 / Eric Hernandez
+ *  Author          : Alex Nider
+ *
+ *  Purpose:
+ *********************************************************************/
 package com.example.rng_alarm;
-
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.os.Build;
@@ -14,7 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,86 +28,88 @@ import androidx.core.app.NotificationCompat;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.LinkedList;
 
-public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public class MainActivity extends AppCompatActivity {
 
-    //This is
+    /****** Private members ******/
     private Toolbar myToolbar;
-
-
-    public static Ringtone ringtone;
-
-    private TextView alarmNumber;
     private EditText editNoteText;
     private Button sendNotificationBtn;
     private Button addNewAlarm;
-    private TextView textViewer;
-    private TextView textViewer2;
     private int launchTimePicker = 1; //request code
     private NotificationHelper mNotificationHelper;
-    private static AlarmBank alarmBank = new AlarmBank();
     private TextView texCurrDateTime;
+    private PendingIntent pendingIntent;
+
+    // Create AlarmBank and Alarm objects
+    private static AlarmBank Bank = new AlarmBank();
+    private Alarm NewAlarm = new Alarm();
+    private static LinkedList<Alarm> AlarmList = new LinkedList<Alarm>();
+
+    /****** Public members ******/
+    public static Ringtone ringtone;
+    public AlarmManager alarmManager;
 
     // Create calendar object, get current date
     Calendar calendar = Calendar.getInstance();
     String currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
-
-
-    public AlarmManager alarmManager;
-    private PendingIntent pendingIntent;
-    private activeAlarm mCancelAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //UVBAR
+        // UVBAR - Dont now what this is going to be used for...
         myToolbar=findViewById(R.id.toolbarID);
         setSupportActionBar(myToolbar);
-
 
         /*
           connects the UI to to variables by ID
          */
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
         addNewAlarm = findViewById(R.id.addNewAlarmBtn);
         texCurrDateTime = findViewById(R.id.text_currDateTime);
         texCurrDateTime.setText(currentDate);
         sendNotificationBtn = findViewById(R.id.sendNotificationBtn);
         editNoteText = findViewById(R.id.noteMessage);
         mNotificationHelper = new NotificationHelper(this);
-        textViewer = findViewById(R.id.textViewer);
-        textViewer2 = findViewById(R.id.textViewer2);
-        alarmNumber = findViewById(R.id.alarmNum);
 
-        mCancelAlarm = new activeAlarm();
-
-
-        //waits for user to tap on button
+        /**
+         * DEFINITION:  Event driven function sends notifications
+         * PARAMETERS:  None
+         **/
         sendNotificationBtn.setOnClickListener((View v) -> {
-            //what happened when the user taps button
+            // What happened when the user taps button
             sendNotification(editNoteText.getText().toString());
         });
 
-        //waits for user to tap button
+        /**
+         * DEFINITION:  Event driven function opens add alarm activity
+         * PARAMETERS:  None
+         **/
         addNewAlarm.setOnClickListener((View v) -> {
-            //what happens when the user taps button
+            // What happens when the user taps button
             openAddAlarmActivity();
         });
-
-
-
     }
+
+    /**
+     * DEFINITION:  Opens the option menu
+     * PARAMETERS:  None
+     **/
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        MenuInflater inflater=getMenuInflater();
+        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu,menu);
         return true;
     }
 
+    /**
+     * DEFINITION:  Opens activity_add_alarm
+     * PARAMETERS:  None
+     **/
     public void openAddAlarmActivity() {
         Intent timePickIntent = new Intent(MainActivity.this, addAlarm.class);
         //starts any activity and waits for a result
@@ -110,67 +117,64 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         startActivityForResult(timePickIntent, launchTimePicker);
     }
 
-
+    /**
+     * DEFINITION:  Sends a notification
+     * PARAMETERS:  Message - manually entered message
+     **/
     public void sendNotification(String message) {
         NotificationCompat.Builder nb = mNotificationHelper.getChannelNotification(message);
         mNotificationHelper.getManager().notify(1, nb.build());
     }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        TextView textView = findViewById(R.id.textViewer);
-        String newTime = "Hour: " + hourOfDay + " Minute: " + minute;
-        textView.setText(newTime);
-    }
-
-    //this function gets executed when the startActivityForResult finishes
+    /**
+     * DEFINITION:  Gets executed when the startActivityForResult finishes
+     * PARAMETERS:  Callback
+     **/
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == launchTimePicker) {
             //if the activity was completed normally
-            if (resultCode == Activity.RESULT_OK) {
-                int hour = 0;
-                int minute = 0;
-                String note;
-
-                //this grabs the data that was bundle in the addAlarm activity
-                hour = data.getIntExtra("HOUR", hour);
-                minute = data.getIntExtra("MIN", minute);
-                note = data.getStringExtra("NOTE");
-
-                String newTime = hour + ":" + minute + "\n" + note;
-                textViewer.setText(newTime);
-
-                setAlarm(hour, minute, note);
+            if (resultCode != Activity.RESULT_OK) {
+                // Set the alarm
+                setAlarm();
             }
-            //if the activity was not completed
-            if (resultCode == Activity.RESULT_CANCELED) {
-                String noTime = "NO TIME PLACED";
-                textViewer.setText(noTime);
+            else {
+                // Need to notify user alarm wasn't set
             }
         }
     }//onActivityResult
 
+    /**
+     * DEFINITION:  Queues up the next active alarm
+     * PARAMETERS:  None
+     **/
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void setAlarm(int hour, int minute, String note) {
+    private void setAlarm() {
 
+        // Retrieve the active alarm bank and get the first alarm
+        Bank.getActiveAlarmBank();
+        NewAlarm = Bank.getAlarm();
+
+        int hour = NewAlarm.getAlarmHour();
+        int minute = NewAlarm.getAlarmMinutes();
 
         Intent aIntent = new Intent(MainActivity.this, alarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0,
+                aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
+
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-        Alarm newAlarm = new Alarm();
-        newAlarm.setAlarmTime(hour, minute);
-        newAlarm.setAlarmName(note);
-        alarmBank.addNewAlarmToBank(newAlarm);
-
-        alarmNumber.setText("Alarm: " + alarmBank.getAlarmBankCount());
     }
-    public static AlarmBank getAlarmBank() { return alarmBank; }
+
+    /**
+     * DEFINITION:  Returns the activated alarm
+     * PARAMETERS:  None
+     **/
+    // Need to return the active alarm
+    public static Alarm getActiveAlarm() { return Bank.getAlarm(); }
 }

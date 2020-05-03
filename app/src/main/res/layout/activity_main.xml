@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     tools:context=".MainActivity">
 
 
@@ -21,87 +20,63 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/noteMessage"
-        app:layout_constraintVertical_bias="1.0" />
-
-
-    <include
-        layout="@layout/uvbar"
-        app:layout_constraintBottom_toBottomOf="@+id/addNewAlarmBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.758" />
 
     <EditText
         android:id="@+id/noteMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autofillHints="Note"
         android:hint="@string/note"
+        android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.811"
-        android:autofillHints="Note"
-        android:inputType="text" />
+        app:layout_constraintVertical_bias="0.811" />
 
     <TextView
         android:id="@+id/text_currDateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="28dp"
         android:text="@string/date_time"
         android:textColor="#000000"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btn_createAlarm"
+        app:layout_constraintBottom_toTopOf="@+id/digitalClock"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.486" />
+        app:layout_constraintTop_toBottomOf="@+id/include3"
+        app:layout_constraintVertical_bias="0.0" />
 
     <DigitalClock
+        android:id="@+id/digitalClock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="216dp"
         android:gravity="center"
         android:textColor="#000000"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btn_createAlarm"
+        app:layout_constraintBottom_toTopOf="@+id/noteMessage"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_currDateTime"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintTop_toBottomOf="@+id/include3"
+        app:layout_constraintVertical_bias="0.628" />
 
-    <TextView
-        android:id="@+id/textViewer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewer2"
+    <include
+        layout="@layout/uvbar"
+        app:layout_constraintBottom_toBottomOf="@+id/addNewAlarmBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.735" />
-
-    <TextView
-        android:id="@+id/textViewer2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.079"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.328" />
-
-
+        app:layout_constraintVertical_bias="0.178" />
 
     <Button
         android:id="@+id/sendNotificationBtn"
@@ -118,18 +93,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/noteMessage"
         app:layout_constraintVertical_bias="0.421" />
-
-    <TextView
-        android:id="@+id/alarmNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/alarms"
-        app:layout_constraintBottom_toTopOf="@+id/textViewer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.897" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

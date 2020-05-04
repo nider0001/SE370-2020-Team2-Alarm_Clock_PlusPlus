@@ -164,9 +164,9 @@ public class MainActivity extends AppCompatActivity {
     private void setAlarm() {
 
         // Retrieve the active alarm bank and get the first alarm
-        AlarmList = AlarmBank.getActiveAlarmBank();
-        NewAlarm = AlarmBank.getAlarm();
-        AlarmBank.addNewAlarmToBank(NewAlarm);
+//        AlarmList = AlarmBank.getActiveAlarmBank();
+
+        NewAlarm = Bank.getAlarm();
 
         int requestCode = NewAlarm.getId();
         int hour = NewAlarm.getAlarmHour();

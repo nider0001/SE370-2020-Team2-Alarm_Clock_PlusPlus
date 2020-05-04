@@ -30,7 +30,7 @@ public class activeAlarm extends AppCompatActivity {
     private Alarm ActiveAlarm;
     private AlarmBank Bank = new AlarmBank();
     private LinkedList<Alarm> List;
-    private int requestCode = -1;
+    private int requestCode = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -61,7 +61,7 @@ public class activeAlarm extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(activeAlarm.this,
                 requestCode , aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        text_alarmName.setText(ActiveAlarm.getAlarmName());
+        text_alarmName.setText(Bank.getAlarmByRequestCode(requestCode).getAlarmName());
 
         /**
          * DEFINITION:  Event driven function disables active alarm
@@ -74,6 +74,8 @@ public class activeAlarm extends AppCompatActivity {
             //moves alarm back
             List.removeFirst();
             List.addLast(ActiveAlarm);
+
+
 
             alarmManager.cancel(pendingIntent);
             MainActivity.ringtone.stop();
@@ -88,10 +90,6 @@ public class activeAlarm extends AppCompatActivity {
          * PARAMETERS:
          **/
         alarmSnooze.setOnClickListener(v -> {
-
-            //moves alarm back
-            List.removeFirst();
-            List.addLast(ActiveAlarm);
 
             Calendar calendar2 = Calendar.getInstance();
             calendar2.set(Calendar.HOUR_OF_DAY, (ActiveAlarm.getAlarmHour()));

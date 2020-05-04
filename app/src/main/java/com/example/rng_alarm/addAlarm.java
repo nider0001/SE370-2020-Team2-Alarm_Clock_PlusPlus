@@ -26,7 +26,7 @@ public class addAlarm extends AppCompatActivity {
     private static int min;
 
     // Create new alarm object
-    private Alarm NewAlarm = new Alarm();
+    private Alarm NewAlarm;
     private AlarmBank Bank = new AlarmBank();
     private static int defaultNameCount = 1;
 

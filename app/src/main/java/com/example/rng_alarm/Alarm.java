@@ -26,7 +26,6 @@ public class Alarm {
         alarm_minutes = 0;
         alarm_name = "";
         active = true;
-        setId(count++);
     }
 
     /******** Constructor *******/
@@ -36,7 +35,7 @@ public class Alarm {
         alarm_minutes = minutes;
         alarm_name = name;
         active = true;
-        this.setId(count++);
+        setId(count++);
     }
 
 

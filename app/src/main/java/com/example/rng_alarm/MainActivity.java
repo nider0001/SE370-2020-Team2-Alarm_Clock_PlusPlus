@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -35,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     /****** Private members ******/
     private Toolbar myToolbar;
-    private EditText editNoteText;
-    private Button sendNotificationBtn;
+    //private EditText editNoteText;
+    //private Button sendNotificationBtn;
     private Button addNewAlarm;
     private int launchTimePicker = 1; //request code
     private NotificationHelper mNotificationHelper;
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private Alarm NewAlarm;
     private static LinkedList<Alarm> AlarmList = new LinkedList<Alarm>();
 
-    
+
     /****** Public members ******/
     public static Ringtone ringtone;
     public AlarmManager alarmManager;
@@ -73,20 +72,20 @@ public class MainActivity extends AppCompatActivity {
         addNewAlarm = findViewById(R.id.addNewAlarmBtn);
         texCurrDateTime = findViewById(R.id.text_currDateTime);
         texCurrDateTime.setText(currentDate);
-        sendNotificationBtn = findViewById(R.id.sendNotificationBtn);
-        editNoteText = findViewById(R.id.noteMessage);
+        //sendNotificationBtn = findViewById(R.id.sendNotificationBtn);
+        //editNoteText = findViewById(R.id.noteMessage);
         mNotificationHelper = new NotificationHelper(this);
 
 
         /**
          * DEFINITION:  Event driven function sends notifications
          * PARAMETERS:  None
-         **/
+
         sendNotificationBtn.setOnClickListener((View v) -> {
             // What happened when the user taps button
             sendNotification(editNoteText.getText().toString());
         });
-
+         **/
         /**
          * DEFINITION:  Event driven function opens add alarm activity
          * PARAMETERS:  None

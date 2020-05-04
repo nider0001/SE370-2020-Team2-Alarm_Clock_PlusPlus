@@ -189,14 +189,14 @@ public class MainActivity extends AppCompatActivity {
      * PARAMETERS:  None
      **/
     private void displayAlarms() {
-        int switchName;
+        String switchName;
         NewAlarm = new Alarm();
 
         AlarmList = Bank.getAlarmBank();
 
         for (int i = 0; i < AlarmList.size(); i++) {
             NewAlarm = AlarmList.get(i);
-            switchName = NewAlarm.getId();
+            switchName = NewAlarm.getAlarmName();
             makeSwitchVisible(i + 1, switchName);
         }
     }
@@ -205,28 +205,27 @@ public class MainActivity extends AppCompatActivity {
      * DEFINITION:  Sets up switches
      * PARAMETERS:  None
      **/
-    private void makeSwitchVisible(int switchNum, int switchName) {
+    private void makeSwitchVisible(int switchNum, String switchName) {
 
         switch (switchNum) {
             case 1:
                 Switch alarm1 = findViewById(R.id.switch_Alarm1);
-                alarm1.setText("ID" + switchName);
+                alarm1.setText(switchName);
                 alarm1.setVisibility(View.VISIBLE);
                 alarm1.setChecked(true);
                 break;
             case 2:
                 Switch alarm2 = findViewById(R.id.switch_Alarm2);
-                alarm2.setText("ID" + switchName);
+                alarm2.setText(switchName);
                 alarm2.setVisibility(View.VISIBLE);
                 alarm2.setChecked(true);
                 break;
             case 3:
                 Switch alarm3 = findViewById(R.id.switch_Alarm3);
-                alarm3.setText("ID" + switchName);
+                alarm3.setText(switchName);
                 alarm3.setVisibility(View.VISIBLE);
                 alarm3.setChecked(true);
                 break;
-                /**
             case 4:
                 Switch alarm4 = findViewById(R.id.switch_Alarm4);
                 alarm4.setText(switchName);
@@ -269,7 +268,6 @@ public class MainActivity extends AppCompatActivity {
                 alarm10.setVisibility(View.VISIBLE);
                 alarm10.setChecked(true);
                 break;
-                 **/
         }
 
     }

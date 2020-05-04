@@ -21,7 +21,7 @@ public class AlarmBank {
      * DEFINITION:  Adds a new alarm to the List
      * PARAMETERS:  Takes in alarm element 'name'
      **/
-    public static void addNewAlarmToBank(Alarm newAlarm) {
+    public void addNewAlarmToBank(Alarm newAlarm) {
         // Add alarm to bank
         Bank.add(newAlarm);
         isAlarmActive(newAlarm);
@@ -31,7 +31,7 @@ public class AlarmBank {
      * DEFINITION:  Determines if alarm is active or not and stores accordingly
      * PARAMETERS:  Takes in alarm element
      **/
-    public static void isAlarmActive(Alarm alarm){
+    public void isAlarmActive(Alarm alarm){
         // Determine the status of alarm
         if (alarm.getAlarmActiveStatus() == true) {
             Active.add(alarm);
@@ -51,7 +51,7 @@ public class AlarmBank {
      * DEFINITION:  Returns the first alarm in the bank
      * PARAMETERS:
      **/
-    public static Alarm getAlarm() {
+    public Alarm getAlarm() {
         return Bank.getLast();
     }
 
@@ -66,9 +66,15 @@ public class AlarmBank {
      * PARAMETERS:  None
      *
      **/
-    public static LinkedList<Alarm> getActiveAlarmBank() { return Active; }
+    public LinkedList<Alarm> getActiveAlarmBank() { return Active; }
 
-    public static Alarm getAlarmByRequestCode(int requestCode) {
+
+    /**
+     * DEFINITION:
+     * PARAMETERS:  None
+     *
+     **/
+    public Alarm getAlarmByRequestCode(int requestCode) {
         for(int i = 0; i < Active.size(); i++)
         {
             if(Active.get(i).getId() == requestCode)
@@ -78,7 +84,6 @@ public class AlarmBank {
             else {
                 continue;
             }
-
         }
         return Active.getFirst();
     }

@@ -26,7 +26,8 @@ public class addAlarm extends AppCompatActivity {
     private static int min;
 
     // Create new alarm object
-    private Alarm NewAlarm;
+    private Alarm NewAlarm = new Alarm();
+    private AlarmBank Bank = new AlarmBank();
     private static int defaultNameCount = 1;
 
 
@@ -62,24 +63,16 @@ public class addAlarm extends AppCompatActivity {
                     name = "Alarm" + defaultNameCount;
                     defaultNameCount++;
                 }
-                // Set all alarm attributes
-                //setAlarmAttributes(name,hour,min);
 
+                // Set all alarm attributes
                 NewAlarm = new Alarm(hour, min, name);
 
                 // Send to bank
-                AlarmBank.Bank.add(NewAlarm);
+                Bank.addNewAlarmToBank(NewAlarm);
 
                 finish();
             }
         });
     }
 
-    /**
-     * DEFINITION:  Sets alarm attributes.
-     * PARAMETERS:  Name, hour, minutes
-     **/
-     void setAlarmAttributes(String name, int hour, int min) {
-
-     }
 }

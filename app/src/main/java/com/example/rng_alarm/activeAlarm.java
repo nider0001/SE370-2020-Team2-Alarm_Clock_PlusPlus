@@ -28,7 +28,8 @@ public class activeAlarm extends AppCompatActivity {
     private AlarmManager alarmManager;
     private TextView texCurrDateTime;
     private Alarm ActiveAlarm;
-    private LinkedList<Alarm> Bank;
+    private AlarmBank Bank = new AlarmBank();
+    private LinkedList<Alarm> List;
     private int requestCode = -1;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -43,10 +44,11 @@ public class activeAlarm extends AppCompatActivity {
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         // Get the active alarm
-        Bank = AlarmBank.getActiveAlarmBank();
-        ActiveAlarm = Bank.getFirst();
+        List = Bank.getActiveAlarmBank();
+        ActiveAlarm = List.getFirst();
 
         requestCode = ActiveAlarm.getId();
+
 
         // Create calendar object, get current date
         Calendar calendar = Calendar.getInstance();
@@ -59,7 +61,7 @@ public class activeAlarm extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(activeAlarm.this,
                 requestCode , aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        text_alarmName.setText(AlarmBank.getAlarmByRequestCode(requestCode).getAlarmName());
+        text_alarmName.setText(ActiveAlarm.getAlarmName());
 
         /**
          * DEFINITION:  Event driven function disables active alarm
@@ -70,8 +72,8 @@ public class activeAlarm extends AppCompatActivity {
         alarmDisable.setOnClickListener(v -> {
 
             //moves alarm back
-            Bank.removeFirst();
-            Bank.addLast(ActiveAlarm);
+            List.removeFirst();
+            List.addLast(ActiveAlarm);
 
             alarmManager.cancel(pendingIntent);
             MainActivity.ringtone.stop();
@@ -88,8 +90,8 @@ public class activeAlarm extends AppCompatActivity {
         alarmSnooze.setOnClickListener(v -> {
 
             //moves alarm back
-            Bank.removeFirst();
-            Bank.addLast(ActiveAlarm);
+            List.removeFirst();
+            List.addLast(ActiveAlarm);
 
             Calendar calendar2 = Calendar.getInstance();
             calendar2.set(Calendar.HOUR_OF_DAY, (ActiveAlarm.getAlarmHour()));

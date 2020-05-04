@@ -19,12 +19,14 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -41,10 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private NotificationHelper mNotificationHelper;
     private TextView texCurrDateTime;
     private PendingIntent pendingIntent;
-    private TextView alarm1;
-    private TextView alarm2;
 
     // Create AlarmBank and Alarm objects
+    private static AlarmBank Bank = new AlarmBank();
     private Alarm NewAlarm;
     private static LinkedList<Alarm> AlarmList = new LinkedList<Alarm>();
 
@@ -76,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
         editNoteText = findViewById(R.id.noteMessage);
         mNotificationHelper = new NotificationHelper(this);
 
-        alarm1 = findViewById(R.id.alarmView1);
-        alarm2 = findViewById(R.id.alarmView2);
 
         /**
          * DEFINITION:  Event driven function sends notifications
@@ -96,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
             // What happens when the user taps button
             openAddAlarmActivity();
         });
+
+        /**
+         * DEFINITION:  Event driven function toggles alarm
+         * PARAMETERS:  None
+         **/
     }
 
     /**
@@ -143,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode != Activity.RESULT_OK) {
                 // Set the alarm
                 setAlarm();
+                // Set up list of alarms
+                displayAlarms();
             }
             else {
                 // Need to notify user alarm wasn't set
@@ -157,16 +163,17 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setAlarm() {
 
+        NewAlarm = new Alarm();
+
         // Retrieve the active alarm bank and get the first alarm
-        AlarmList = AlarmBank.getActiveAlarmBank();
-        NewAlarm = AlarmBank.getAlarm();
-        AlarmBank.addNewAlarmToBank(NewAlarm);
+//        AlarmList = AlarmBank.getActiveAlarmBank();
+
+        NewAlarm = Bank.getAlarm();
 
         int requestCode = NewAlarm.getId();
         int hour = NewAlarm.getAlarmHour();
         int minute = NewAlarm.getAlarmMinutes();
 
-        alarm2.setText("H: " + hour + " M: " + minute + " rc: " + requestCode);
         Intent aIntent = new Intent(MainActivity.this, alarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(MainActivity.this, requestCode,
                 aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -178,4 +185,98 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
+    /**
+     * DEFINITION:  Sets up switches
+     * PARAMETERS:  None
+     **/
+    private void displayAlarms() {
+        String switchName = "";
+        NewAlarm = new Alarm();
+
+        AlarmList = Bank.getAlarmBank();
+
+        for (int i = 0; i < AlarmList.size(); i++) {
+            NewAlarm = AlarmList.get(i);
+            switchName = NewAlarm.getAlarmName();
+            makeSwitchVisible(i + 1, switchName);
+        }
+    }
+
+    /**
+     * DEFINITION:  Sets up switches
+     * PARAMETERS:  None
+     **/
+    private void makeSwitchVisible(int switchNum, String switchName) {
+
+        switch (switchNum) {
+            case 1:
+                Switch alarm1 = findViewById(R.id.switch_Alarm1);
+                alarm1.setText(switchName);
+                alarm1.setVisibility(View.VISIBLE);
+                alarm1.setChecked(true);
+                break;
+            case 2:
+                Switch alarm2 = findViewById(R.id.switch_Alarm2);
+                alarm2.setText(switchName);
+                alarm2.setVisibility(View.VISIBLE);
+                alarm2.setChecked(true);
+                break;
+            case 3:
+                Switch alarm3 = findViewById(R.id.switch_Alarm3);
+                alarm3.setText(switchName);
+                alarm3.setVisibility(View.VISIBLE);
+                alarm3.setChecked(true);
+                break;
+            case 4:
+                Switch alarm4 = findViewById(R.id.switch_Alarm4);
+                alarm4.setText(switchName);
+                alarm4.setVisibility(View.VISIBLE);
+                alarm4.setChecked(true);
+                break;
+            case 5:
+                Switch alarm5 = findViewById(R.id.switch_Alarm5);
+                alarm5.setText(switchName);
+                alarm5.setVisibility(View.VISIBLE);
+                alarm5.setChecked(true);
+                break;
+            case 6:
+                Switch alarm6 = findViewById(R.id.switch_Alarm6);
+                alarm6.setText(switchName);
+                alarm6.setVisibility(View.VISIBLE);
+                alarm6.setChecked(true);
+                break;
+            case 7:
+                Switch alarm7 = findViewById(R.id.switch_Alarm7);
+                alarm7.setText(switchName);
+                alarm7.setVisibility(View.VISIBLE);
+                alarm7.setChecked(true);
+                break;
+            case 8:
+                Switch alarm8 = findViewById(R.id.switch_Alarm8);
+                alarm8.setText(switchName);
+                alarm8.setVisibility(View.VISIBLE);
+                alarm8.setChecked(true);
+                break;
+            case 9:
+                Switch alarm9 = findViewById(R.id.switch_Alarm9);
+                alarm9.setText(switchName);
+                alarm9.setVisibility(View.VISIBLE);
+                alarm9.setChecked(true);
+                break;
+            case 10:
+                Switch alarm10 = findViewById(R.id.switch_Alarm10);
+                alarm10.setText(switchName);
+                alarm10.setVisibility(View.VISIBLE);
+                alarm10.setChecked(true);
+                break;
+        }
+
+    }
+
+    /**
+     * DEFINITION:  Returns the activated alarm
+     * PARAMETERS:  None
+     **/
+    // Need to return the active alarm
+    public static Alarm getActiveAlarm() { return Bank.getAlarm(); }
 }

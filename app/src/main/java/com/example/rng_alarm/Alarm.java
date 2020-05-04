@@ -38,7 +38,6 @@ public class Alarm {
         setId(count++);
     }
 
-
     /********** Mutator **********/
 
     /**

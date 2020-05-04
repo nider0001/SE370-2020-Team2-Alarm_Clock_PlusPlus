@@ -8,6 +8,10 @@
  *           use LL, vectors, or arrays
  *********************************************************************/
 package com.example.rng_alarm;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+
 import java.util.*; // Needed for linked list
 
 public class AlarmBank {
@@ -15,6 +19,7 @@ public class AlarmBank {
     public static LinkedList<Alarm> Bank = new LinkedList<Alarm>();
     private static LinkedList<Alarm> Active = new LinkedList<Alarm>();
     private static LinkedList<Alarm> Inactive = new LinkedList<Alarm>();
+    private AlarmManager alarmManager;
 
 
     /**
@@ -38,6 +43,21 @@ public class AlarmBank {
         }
         else {
             Inactive.add(alarm);
+        }
+    }
+
+    /**
+     * DEFINITION:  Determines if alarm is active or not and stores accordingly
+     * PARAMETERS:  Takes in alarm element
+     **/
+    public void moveAlarm(Alarm alarm, int id){
+        boolean stat = alarm.getAlarmActiveStatus();
+        // Determine the status of alarm
+        if (stat == false) {
+            rearrange(id, stat);
+        }
+        else {
+            rearrange(id, stat);
         }
     }
 
@@ -74,7 +94,7 @@ public class AlarmBank {
      * PARAMETERS:  None
      *
      **/
-    public Alarm getAlarmByRequestCode(int requestCode) {
+    public Alarm getActiveAlarmByRequestCode(int requestCode) {
         for(int i = 0; i < Active.size(); i++)
         {
             if(Active.get(i).getId() == requestCode)
@@ -88,4 +108,47 @@ public class AlarmBank {
         return Active.getFirst();
     }
 
+    /**
+     * DEFINITION:
+     * PARAMETERS:  None
+     *
+     **/
+    public Alarm getInactiveAlarmByRequestCode(int requestCode) {
+        for(int i = 0; i < Inactive.size(); i++)
+        {
+            if(Inactive.get(i).getId() == requestCode)
+            {
+                return Inactive.get(i);
+            }
+            else {
+                continue;
+            }
+        }
+        return Inactive.getFirst();
+    }
+
+    /**
+     * DEFINITION:  Rearranges Invalid and Valid linkedList
+     * PARAMETERS:  
+     **/
+    public void rearrange(int id, boolean status) {
+
+        if(status == false) {
+            for (int i = 0; i < Active.size(); i++) {
+                if (id == Active.get(i).getId()) {
+                    Inactive.add(Active.get(i));
+                    Active.remove(i);
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < Inactive.size(); i++) {
+                if (id == Inactive.get(i).getId()) {
+                    Active.add(Inactive.get(i));
+                    Inactive.remove(i);
+                }
+            }
+        }
+    }
 }
+

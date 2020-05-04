@@ -60,7 +60,7 @@ public class activeAlarm extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(activeAlarm.this,
                 requestCode , aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        text_alarmName.setText(Bank.getAlarmByRequestCode(requestCode).getAlarmName());
+        text_alarmName.setText(Bank.getActiveAlarmByRequestCode(requestCode).getAlarmName());
 
         /**
          * DEFINITION:  Event driven function disables active alarm

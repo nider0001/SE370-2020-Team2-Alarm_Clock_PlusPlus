@@ -79,8 +79,6 @@ public class activeAlarm extends AppCompatActivity {
             alarmManager.cancel(pendingIntent);
             MainActivity.ringtone.stop();
 
-
-
             finish();
         });
 

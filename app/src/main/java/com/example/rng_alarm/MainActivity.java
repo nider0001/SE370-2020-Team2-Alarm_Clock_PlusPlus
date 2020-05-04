@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private Alarm NewAlarm;
     private static LinkedList<Alarm> AlarmList = new LinkedList<Alarm>();
 
+    
     /****** Public members ******/
     public static Ringtone ringtone;
     public AlarmManager alarmManager;

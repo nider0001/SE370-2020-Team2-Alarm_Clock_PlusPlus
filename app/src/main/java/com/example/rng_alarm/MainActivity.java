@@ -163,6 +163,8 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setAlarm() {
 
+        NewAlarm = new Alarm();
+
         // Retrieve the active alarm bank and get the first alarm
 //        AlarmList = AlarmBank.getActiveAlarmBank();
 

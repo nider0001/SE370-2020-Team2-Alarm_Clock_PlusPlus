@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -34,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     /****** Private members ******/
     private Toolbar myToolbar;
-    //private EditText editNoteText;
-    //private Button sendNotificationBtn;
+    private EditText editNoteText;
+    private Button sendNotificationBtn;
     private Button addNewAlarm;
     private int launchTimePicker = 1; //request code
     private NotificationHelper mNotificationHelper;
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private static AlarmBank Bank = new AlarmBank();
     private Alarm NewAlarm;
     private static LinkedList<Alarm> AlarmList = new LinkedList<Alarm>();
-
 
     /****** Public members ******/
     public static Ringtone ringtone;
@@ -72,20 +73,18 @@ public class MainActivity extends AppCompatActivity {
         addNewAlarm = findViewById(R.id.addNewAlarmBtn);
         texCurrDateTime = findViewById(R.id.text_currDateTime);
         texCurrDateTime.setText(currentDate);
-        //sendNotificationBtn = findViewById(R.id.sendNotificationBtn);
-        //editNoteText = findViewById(R.id.noteMessage);
         mNotificationHelper = new NotificationHelper(this);
 
 
         /**
          * DEFINITION:  Event driven function sends notifications
          * PARAMETERS:  None
-
+         **/
         sendNotificationBtn.setOnClickListener((View v) -> {
             // What happened when the user taps button
             sendNotification(editNoteText.getText().toString());
         });
-         **/
+
         /**
          * DEFINITION:  Event driven function opens add alarm activity
          * PARAMETERS:  None
@@ -189,15 +188,17 @@ public class MainActivity extends AppCompatActivity {
      * PARAMETERS:  None
      **/
     private void displayAlarms() {
-        int switchName;
+        String switchName = "";
+        int id;
         NewAlarm = new Alarm();
 
         AlarmList = Bank.getAlarmBank();
 
         for (int i = 0; i < AlarmList.size(); i++) {
             NewAlarm = AlarmList.get(i);
-            switchName = NewAlarm.getId();
-            makeSwitchVisible(i + 1, switchName);
+            switchName = NewAlarm.getAlarmName();
+            id = NewAlarm.getId();
+            makeSwitchVisible(i + 1, switchName, id);
         }
     }
 
@@ -205,71 +206,69 @@ public class MainActivity extends AppCompatActivity {
      * DEFINITION:  Sets up switches
      * PARAMETERS:  None
      **/
-    private void makeSwitchVisible(int switchNum, int switchName) {
+    private void makeSwitchVisible(int switchNum, String switchName, int id) {
 
         switch (switchNum) {
             case 1:
                 Switch alarm1 = findViewById(R.id.switch_Alarm1);
-                alarm1.setText("ID" + switchName);
+                alarm1.setText(id + ":" + switchName);
                 alarm1.setVisibility(View.VISIBLE);
                 alarm1.setChecked(true);
                 break;
             case 2:
                 Switch alarm2 = findViewById(R.id.switch_Alarm2);
-                alarm2.setText("ID" + switchName);
+                alarm2.setText(id + ":" + switchName);
                 alarm2.setVisibility(View.VISIBLE);
                 alarm2.setChecked(true);
                 break;
             case 3:
                 Switch alarm3 = findViewById(R.id.switch_Alarm3);
-                alarm3.setText("ID" + switchName);
+                alarm3.setText(id + ":" + switchName);
                 alarm3.setVisibility(View.VISIBLE);
                 alarm3.setChecked(true);
                 break;
-                /**
             case 4:
                 Switch alarm4 = findViewById(R.id.switch_Alarm4);
-                alarm4.setText(switchName);
+                alarm4.setText(id + ":" + switchName);
                 alarm4.setVisibility(View.VISIBLE);
                 alarm4.setChecked(true);
                 break;
             case 5:
                 Switch alarm5 = findViewById(R.id.switch_Alarm5);
-                alarm5.setText(switchName);
+                alarm5.setText(id + ":" + switchName);
                 alarm5.setVisibility(View.VISIBLE);
                 alarm5.setChecked(true);
                 break;
             case 6:
                 Switch alarm6 = findViewById(R.id.switch_Alarm6);
-                alarm6.setText(switchName);
+                alarm6.setText(id + ":" + switchName);
                 alarm6.setVisibility(View.VISIBLE);
                 alarm6.setChecked(true);
                 break;
             case 7:
                 Switch alarm7 = findViewById(R.id.switch_Alarm7);
-                alarm7.setText(switchName);
+                alarm7.setText(id + ":" + switchName);
                 alarm7.setVisibility(View.VISIBLE);
                 alarm7.setChecked(true);
                 break;
             case 8:
                 Switch alarm8 = findViewById(R.id.switch_Alarm8);
-                alarm8.setText(switchName);
+                alarm8.setText(id + ":" + switchName);
                 alarm8.setVisibility(View.VISIBLE);
                 alarm8.setChecked(true);
                 break;
             case 9:
                 Switch alarm9 = findViewById(R.id.switch_Alarm9);
-                alarm9.setText(switchName);
+                alarm9.setText(id + ":" + switchName);
                 alarm9.setVisibility(View.VISIBLE);
                 alarm9.setChecked(true);
                 break;
             case 10:
                 Switch alarm10 = findViewById(R.id.switch_Alarm10);
-                alarm10.setText(switchName);
+                alarm10.setText(id + ":" + switchName);
                 alarm10.setVisibility(View.VISIBLE);
                 alarm10.setChecked(true);
                 break;
-                 **/
         }
 
     }

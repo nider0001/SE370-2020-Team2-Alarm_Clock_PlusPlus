@@ -26,14 +26,14 @@
         android:id="@+id/text_currDateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="92dp"
         android:text="@string/date_time"
         android:textColor="#000000"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include5" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <DigitalClock
         android:id="@+id/digitalClock"
@@ -50,19 +50,17 @@
         app:layout_constraintTop_toBottomOf="@+id/text_currDateTime" />
 
     <include
-        android:id="@+id/include5"
+
         layout="@layout/uvbar"
-        app:layout_constraintBottom_toBottomOf="@+id/addNewAlarmBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.081" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
         android:id="@+id/switch_Alarm1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:text="Switch"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -76,6 +74,7 @@
         android:id="@+id/switch_Alarm8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:text="Switch"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -89,6 +88,7 @@
         android:id="@+id/switch_Alarm6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:text="Switch"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -102,6 +102,7 @@
         android:id="@+id/switch_Alarm10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:text="Switch"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -115,6 +116,7 @@
         android:id="@+id/switch_Alarm5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:text="Switch"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -128,6 +130,7 @@
         android:id="@+id/switch_Alarm9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:text="Switch"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -141,6 +144,7 @@
         android:id="@+id/switch_Alarm4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:text="Switch"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -154,6 +158,7 @@
         android:id="@+id/switch_Alarm7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:text="Switch"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -167,6 +172,7 @@
         android:id="@+id/switch_Alarm3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:text="Switch"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -180,6 +186,7 @@
         android:id="@+id/switch_Alarm2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:text="Switch"
         android:textSize="18sp"
         android:textStyle="bold"

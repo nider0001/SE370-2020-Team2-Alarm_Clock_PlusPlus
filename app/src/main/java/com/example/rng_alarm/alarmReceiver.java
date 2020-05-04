@@ -20,7 +20,7 @@ public class alarmReceiver extends BroadcastReceiver{
         // This file receives the alarm and sets it off
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         MainActivity.ringtone = RingtoneManager.getRingtone(context, uri);
-        MainActivity.ringtone.play();
+        //MainActivity.ringtone.play();
 
         Intent activeAlarmIntent = new Intent();
         activeAlarmIntent.setClassName("com.example.rng_alarm",

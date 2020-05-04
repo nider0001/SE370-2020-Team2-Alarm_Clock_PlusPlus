@@ -54,8 +54,7 @@ public class activeAlarm extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
         texCurrDateTime = findViewById(R.id.text_currDateTime2);
-        //texCurrDateTime.setText(currentDate);
-        texCurrDateTime.setText("ID: " + requestCode);
+        texCurrDateTime.setText(currentDate);
 
         Intent aIntent = new Intent(activeAlarm.this, alarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(activeAlarm.this,
@@ -94,6 +93,8 @@ public class activeAlarm extends AppCompatActivity {
             Calendar calendar2 = Calendar.getInstance();
             calendar2.set(Calendar.HOUR_OF_DAY, (ActiveAlarm.getAlarmHour()));
             calendar2.set(Calendar.MINUTE, (ActiveAlarm.getAlarmMinutes() + 5));
+
+            //resets the time with snooze
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(),
                     pendingIntent);
 

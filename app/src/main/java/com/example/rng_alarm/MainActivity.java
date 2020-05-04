@@ -80,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
          * DEFINITION:  Event driven function sends notifications
          * PARAMETERS:  None
          **/
-        sendNotificationBtn.setOnClickListener((View v) -> {
-            // What happened when the user taps button
-            sendNotification(editNoteText.getText().toString());
-        });
+//        sendNotificationBtn.setOnClickListener((View v) -> {
+//            // What happened when the user taps button
+//            sendNotification(editNoteText.getText().toString());
+//        });
 
         /**
          * DEFINITION:  Event driven function opens add alarm activity
@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
          * DEFINITION:  Event driven function toggles alarm
          * PARAMETERS:  None
          **/
+
     }
 
     /**

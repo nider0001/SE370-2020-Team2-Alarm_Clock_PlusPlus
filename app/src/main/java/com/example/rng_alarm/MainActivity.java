@@ -15,10 +15,9 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -30,13 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -45,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
     /****** Private members ******/
     private Toolbar myToolbar;
-    //private EditText editNoteText;
-    //private Button sendNotificationBtn;
     private Button addNewAlarm;
     private int launchTimePicker = 1;
     private NotificationHelper mNotificationHelper;
@@ -89,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
           connects the UI to to variables by ID
          */
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        addNewAlarm = findViewById(R.id.addNewAlarmBtn);
         texCurrDateTime = findViewById(R.id.text_currDateTime);
         texCurrDateTime.setText(currentDate);
         //sendNotificationBtn = findViewById(R.id.sendNotificationBtn);
@@ -198,6 +187,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * DEFINITION:  Opens add new alarm funciton
+     * PARAMETERS:  None
+     **/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.addAlarm:
+                openAddAlarmActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
      * DEFINITION:  Opens activity_add_alarm
      * PARAMETERS:  None
      **/
@@ -296,61 +301,61 @@ public class MainActivity extends AppCompatActivity {
         switch (switchNum) {
             case 1:
                 Switch alarm1 = findViewById(R.id.switch_Alarm1);
-                alarm1.setText(id + ":" + switchName + ":" + status);
+                alarm1.setText(id + ": " + switchName);
                 alarm1.setVisibility(View.VISIBLE);
                 alarm1.setChecked(status);
                 break;
             case 2:
                 Switch alarm2 = findViewById(R.id.switch_Alarm2);
-                alarm2.setText(id + ":" + switchName + ":" + status);
+                alarm2.setText(id + ": " + switchName);
                 alarm2.setVisibility(View.VISIBLE);
                 alarm2.setChecked(status);
                 break;
             case 3:
                 Switch alarm3 = findViewById(R.id.switch_Alarm3);
-                alarm3.setText(id + ":" + switchName + ":" + status);
+                alarm3.setText(id + ": " + switchName);
                 alarm3.setVisibility(View.VISIBLE);
                 alarm3.setChecked(status);
                 break;
             case 4:
                 Switch alarm4 = findViewById(R.id.switch_Alarm4);
-                alarm4.setText(id + ":" + switchName + ":" + status);
+                alarm4.setText(id + ": " + switchName);
                 alarm4.setVisibility(View.VISIBLE);
                 alarm4.setChecked(status);
                 break;
             case 5:
                 Switch alarm5 = findViewById(R.id.switch_Alarm5);
-                alarm5.setText(id + ":" + switchName + ":" + status);
+                alarm5.setText(id + ": " + switchName);
                 alarm5.setVisibility(View.VISIBLE);
                 alarm5.setChecked(status);
                 break;
             case 6:
                 Switch alarm6 = findViewById(R.id.switch_Alarm6);
-                alarm6.setText(id + ":" + switchName + ":" + status);
+                alarm6.setText(id + ": " + switchName);
                 alarm6.setVisibility(View.VISIBLE);
                 alarm6.setChecked(status);
                 break;
             case 7:
                 Switch alarm7 = findViewById(R.id.switch_Alarm7);
-                alarm7.setText(id + ":" + switchName + ":" + status);
+                alarm7.setText(id + ": " + switchName);
                 alarm7.setVisibility(View.VISIBLE);
                 alarm7.setChecked(status);
                 break;
             case 8:
                 Switch alarm8 = findViewById(R.id.switch_Alarm8);
-                alarm8.setText(id + ":" + switchName + ":" + status);
+                alarm8.setText(id + ": " + switchName);
                 alarm8.setVisibility(View.VISIBLE);
                 alarm8.setChecked(status);
                 break;
             case 9:
                 Switch alarm9 = findViewById(R.id.switch_Alarm9);
-                alarm9.setText(id + ":" + switchName + ":" + status);
+                alarm9.setText(id + ": " + switchName);
                 alarm9.setVisibility(View.VISIBLE);
                 alarm9.setChecked(status);
                 break;
             case 10:
                 Switch alarm10 = findViewById(R.id.switch_Alarm10);
-                alarm10.setText(id + ":" + switchName + ":" + status);
+                alarm10.setText(id + ": " + switchName);
                 alarm10.setVisibility(View.VISIBLE);
                 alarm10.setChecked(status);
                 break;

@@ -38,7 +38,6 @@ public class Alarm {
         setId(count++);
     }
 
-
     /********** Mutator **********/
 
     /**
@@ -88,6 +87,11 @@ public class Alarm {
         return alarm_name;
     }
 
+    /********* Accessors *********/
+    /**
+     * DEFINITION:  Gets alarm name by id
+     * PARAMETERS:  None
+     **/
 
     /**
      * DEFINITION:  Returns the alarm hours

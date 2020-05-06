@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -34,10 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     /****** Private members ******/
     private Toolbar myToolbar;
-    //private EditText editNoteText;
-    //private Button sendNotificationBtn;
     private Button addNewAlarm;
-    private int launchTimePicker = 1; //request code
+    private int launchTimePicker = 1;
     private NotificationHelper mNotificationHelper;
     private TextView texCurrDateTime;
     private PendingIntent pendingIntent;
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private Alarm NewAlarm;
     private static LinkedList<Alarm> AlarmList = new LinkedList<Alarm>();
 
-
     /****** Public members ******/
     public static Ringtone ringtone;
     public AlarmManager alarmManager;
@@ -56,12 +54,13 @@ public class MainActivity extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance();
     String currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // UVBAR - Dont now what this is going to be used for...
+        // UVBAR
         myToolbar=findViewById(R.id.toolbarID);
         setSupportActionBar(myToolbar);
 
@@ -99,6 +98,72 @@ public class MainActivity extends AppCompatActivity {
          * DEFINITION:  Event driven function toggles alarm
          * PARAMETERS:  None
          **/
+        CompoundButton.OnCheckedChangeListener multiListener = new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton v, boolean isChecked) {
+                int id;
+                NewAlarm = new Alarm();
+                // Determine alarm to toggle
+                switch (v.getId()){
+                    case R.id.switch_Alarm1:
+                        NewAlarm = AlarmList.get(0);
+                        break;
+                    case R.id.switch_Alarm2:
+                        NewAlarm = AlarmList.get(1);
+                        break;
+                    case R.id.switch_Alarm3:
+                        NewAlarm = AlarmList.get(2);
+                        break;
+                    case R.id.switch_Alarm4:
+                        NewAlarm = AlarmList.get(3);
+                        break;
+                    case R.id.switch_Alarm5:
+                        NewAlarm = AlarmList.get(4);
+                        break;
+                    case R.id.switch_Alarm6:
+                        NewAlarm = AlarmList.get(5);
+                        break;
+                    case R.id.switch_Alarm7:
+                        NewAlarm = AlarmList.get(6);
+                        break;
+                    case R.id.switch_Alarm8:
+                        NewAlarm = AlarmList.get(7);
+                        break;
+                    case R.id.switch_Alarm9:
+                        NewAlarm = AlarmList.get(8);
+                        break;
+                    case R.id.switch_Alarm10:
+                        NewAlarm = AlarmList.get(10);
+                        break;
+                }
+
+                // Toggle selected alarm
+                NewAlarm.toggleAlarm();
+                id = NewAlarm.getId();
+
+                // Toggle intent
+                if (NewAlarm.getAlarmActiveStatus() == false) {
+                    disableIntent(id);
+                }
+                else {
+                    enableIntent(NewAlarm, id);
+                }
+
+                // Move alarm between active and inactive list
+                Bank.moveAlarm(NewAlarm, id);
+            }
+        };
+
+        // On each switch
+        ((Switch) findViewById(R.id.switch_Alarm1)).setOnCheckedChangeListener(multiListener);
+        ((Switch) findViewById(R.id.switch_Alarm2)).setOnCheckedChangeListener(multiListener);
+        ((Switch) findViewById(R.id.switch_Alarm3)).setOnCheckedChangeListener(multiListener);
+        ((Switch) findViewById(R.id.switch_Alarm4)).setOnCheckedChangeListener(multiListener);
+        ((Switch) findViewById(R.id.switch_Alarm5)).setOnCheckedChangeListener(multiListener);
+        ((Switch) findViewById(R.id.switch_Alarm6)).setOnCheckedChangeListener(multiListener);
+        ((Switch) findViewById(R.id.switch_Alarm7)).setOnCheckedChangeListener(multiListener);
+        ((Switch) findViewById(R.id.switch_Alarm8)).setOnCheckedChangeListener(multiListener);
+        ((Switch) findViewById(R.id.switch_Alarm9)).setOnCheckedChangeListener(multiListener);
+        ((Switch) findViewById(R.id.switch_Alarm10)).setOnCheckedChangeListener(multiListener);
     }
 
     /**
@@ -162,11 +227,8 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setAlarm() {
 
+        // Create new alarm object and last object in bank
         NewAlarm = new Alarm();
-
-        // Retrieve the active alarm bank and get the first alarm
-//        AlarmList = AlarmBank.getActiveAlarmBank();
-
         NewAlarm = Bank.getAlarm();
 
         int requestCode = NewAlarm.getId();
@@ -189,15 +251,18 @@ public class MainActivity extends AppCompatActivity {
      * PARAMETERS:  None
      **/
     private void displayAlarms() {
-        String switchName;
         NewAlarm = new Alarm();
-
         AlarmList = Bank.getAlarmBank();
+        String switchName = "";
+        Boolean status = true;
+        int id;
 
         for (int i = 0; i < AlarmList.size(); i++) {
             NewAlarm = AlarmList.get(i);
             switchName = NewAlarm.getAlarmName();
-            makeSwitchVisible(i + 1, switchName);
+            id = NewAlarm.getId();
+            status = NewAlarm.getAlarmActiveStatus();
+            makeSwitchVisible(i + 1, switchName, id, status);
         }
     }
 
@@ -205,77 +270,103 @@ public class MainActivity extends AppCompatActivity {
      * DEFINITION:  Sets up switches
      * PARAMETERS:  None
      **/
-    private void makeSwitchVisible(int switchNum, String switchName) {
+    private void makeSwitchVisible(int switchNum, String switchName, int id, boolean status) {
 
         switch (switchNum) {
             case 1:
                 Switch alarm1 = findViewById(R.id.switch_Alarm1);
-                alarm1.setText(switchName);
+                alarm1.setText(id + ":" + switchName + ":" + status);
                 alarm1.setVisibility(View.VISIBLE);
-                alarm1.setChecked(true);
+                alarm1.setChecked(status);
                 break;
             case 2:
                 Switch alarm2 = findViewById(R.id.switch_Alarm2);
-                alarm2.setText(switchName);
+                alarm2.setText(id + ":" + switchName + ":" + status);
                 alarm2.setVisibility(View.VISIBLE);
-                alarm2.setChecked(true);
+                alarm2.setChecked(status);
                 break;
             case 3:
                 Switch alarm3 = findViewById(R.id.switch_Alarm3);
-                alarm3.setText(switchName);
+                alarm3.setText(id + ":" + switchName + ":" + status);
                 alarm3.setVisibility(View.VISIBLE);
-                alarm3.setChecked(true);
+                alarm3.setChecked(status);
                 break;
             case 4:
                 Switch alarm4 = findViewById(R.id.switch_Alarm4);
-                alarm4.setText(switchName);
+                alarm4.setText(id + ":" + switchName + ":" + status);
                 alarm4.setVisibility(View.VISIBLE);
-                alarm4.setChecked(true);
+                alarm4.setChecked(status);
                 break;
             case 5:
                 Switch alarm5 = findViewById(R.id.switch_Alarm5);
-                alarm5.setText(switchName);
+                alarm5.setText(id + ":" + switchName + ":" + status);
                 alarm5.setVisibility(View.VISIBLE);
-                alarm5.setChecked(true);
+                alarm5.setChecked(status);
                 break;
             case 6:
                 Switch alarm6 = findViewById(R.id.switch_Alarm6);
-                alarm6.setText(switchName);
+                alarm6.setText(id + ":" + switchName + ":" + status);
                 alarm6.setVisibility(View.VISIBLE);
-                alarm6.setChecked(true);
+                alarm6.setChecked(status);
                 break;
             case 7:
                 Switch alarm7 = findViewById(R.id.switch_Alarm7);
-                alarm7.setText(switchName);
+                alarm7.setText(id + ":" + switchName + ":" + status);
                 alarm7.setVisibility(View.VISIBLE);
-                alarm7.setChecked(true);
+                alarm7.setChecked(status);
                 break;
             case 8:
                 Switch alarm8 = findViewById(R.id.switch_Alarm8);
-                alarm8.setText(switchName);
+                alarm8.setText(id + ":" + switchName + ":" + status);
                 alarm8.setVisibility(View.VISIBLE);
-                alarm8.setChecked(true);
+                alarm8.setChecked(status);
                 break;
             case 9:
                 Switch alarm9 = findViewById(R.id.switch_Alarm9);
-                alarm9.setText(switchName);
+                alarm9.setText(id + ":" + switchName + ":" + status);
                 alarm9.setVisibility(View.VISIBLE);
-                alarm9.setChecked(true);
+                alarm9.setChecked(status);
                 break;
             case 10:
                 Switch alarm10 = findViewById(R.id.switch_Alarm10);
-                alarm10.setText(switchName);
+                alarm10.setText(id + ":" + switchName + ":" + status);
                 alarm10.setVisibility(View.VISIBLE);
-                alarm10.setChecked(true);
+                alarm10.setChecked(status);
                 break;
         }
-
     }
 
     /**
-     * DEFINITION:  Returns the activated alarm
-     * PARAMETERS:  None
+     * DEFINITION:  Disables alarm intent
+     * PARAMETERS:
      **/
-    // Need to return the active alarm
-    public static Alarm getActiveAlarm() { return Bank.getAlarm(); }
+    public void disableIntent(int requestCode) {
+        Intent aIntent = new Intent(MainActivity.this, alarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,
+                requestCode , aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.cancel(pendingIntent);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    /**
+     * DEFINITION:  Enables alarm intent
+     * PARAMETERS:
+     **/
+    public void enableIntent(Alarm alarm, int requestCode) {
+        Intent aIntent = new Intent(MainActivity.this, alarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,
+                requestCode , aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        int hour = NewAlarm.getAlarmHour();
+        int minute = NewAlarm.getAlarmMinutes();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+    }
+
 }

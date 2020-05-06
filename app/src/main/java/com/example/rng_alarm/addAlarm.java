@@ -26,7 +26,7 @@ public class addAlarm extends AppCompatActivity {
     private static int min;
 
     // Create new alarm object
-    private Alarm NewAlarm;
+    private Alarm NewAlarm = new Alarm();
     private AlarmBank Bank = new AlarmBank();
     private static int defaultNameCount = 1;
 
@@ -75,4 +75,9 @@ public class addAlarm extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
 }

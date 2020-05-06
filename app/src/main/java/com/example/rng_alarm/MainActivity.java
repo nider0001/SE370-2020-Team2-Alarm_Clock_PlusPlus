@@ -7,6 +7,7 @@
  *  Purpose:
  *********************************************************************/
 package com.example.rng_alarm;
+
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -14,6 +15,8 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -27,6 +30,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -35,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     /****** Private members ******/
     private Toolbar myToolbar;
+    //private EditText editNoteText;
+    //private Button sendNotificationBtn;
     private Button addNewAlarm;
     private int launchTimePicker = 1;
     private NotificationHelper mNotificationHelper;
@@ -45,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
     private static AlarmBank Bank = new AlarmBank();
     private Alarm NewAlarm;
     private static LinkedList<Alarm> AlarmList = new LinkedList<Alarm>();
+
+    //  storage
+    private String filename = "alarmBank.txt";
+
 
     /****** Public members ******/
     public static Ringtone ringtone;
@@ -60,8 +76,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // UVBAR
-        myToolbar=findViewById(R.id.toolbarID);
+        if (Bank.getActiveAlarmBank().isEmpty()) {
+            restoreData();
+            displayAlarms();
+        }
+
+        // UVBAR - Dont now what this is going to be used for...
+        myToolbar = findViewById(R.id.toolbarID);
         setSupportActionBar(myToolbar);
 
         /*
@@ -80,10 +101,10 @@ public class MainActivity extends AppCompatActivity {
          * DEFINITION:  Event driven function sends notifications
          * PARAMETERS:  None
 
-        sendNotificationBtn.setOnClickListener((View v) -> {
-            // What happened when the user taps button
-            sendNotification(editNoteText.getText().toString());
-        });
+         sendNotificationBtn.setOnClickListener((View v) -> {
+         // What happened when the user taps button
+         sendNotification(editNoteText.getText().toString());
+         });
          **/
         /**
          * DEFINITION:  Event driven function opens add alarm activity
@@ -103,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 int id;
                 NewAlarm = new Alarm();
                 // Determine alarm to toggle
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.switch_Alarm1:
                         NewAlarm = AlarmList.get(0);
                         break;
@@ -143,8 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 // Toggle intent
                 if (NewAlarm.getAlarmActiveStatus() == false) {
                     disableIntent(id);
-                }
-                else {
+                } else {
                     enableIntent(NewAlarm, id);
                 }
 
@@ -171,10 +191,9 @@ public class MainActivity extends AppCompatActivity {
      * PARAMETERS:  None
      **/
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu,menu);
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -213,8 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 setAlarm();
                 // Set up list of alarms
                 displayAlarms();
-            }
-            else {
+            } else {
                 // Need to notify user alarm wasn't set
             }
         }
@@ -244,6 +262,9 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, minute);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+        saveData(NewAlarm);
+
     }
 
     /**
@@ -343,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
     public void disableIntent(int requestCode) {
         Intent aIntent = new Intent(MainActivity.this, alarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,
-                requestCode , aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                requestCode, aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         alarmManager.cancel(pendingIntent);
     }
@@ -356,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
     public void enableIntent(Alarm alarm, int requestCode) {
         Intent aIntent = new Intent(MainActivity.this, alarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,
-                requestCode , aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                requestCode, aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         int hour = NewAlarm.getAlarmHour();
         int minute = NewAlarm.getAlarmMinutes();
@@ -369,4 +390,114 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void restoreData() {
+
+        Alarm newAlarm = new Alarm();
+        int hour = 0;
+        int min = 0;
+        int id = 0;
+        String name = "";
+        boolean status = false;
+
+        String state = Environment.getExternalStorageState();
+        if (!Environment.MEDIA_MOUNTED.equals(state)) {
+            //no storage available
+            return;
+        }
+        //points to a new file at root dir
+        File file = new File(getExternalFilesDir(null), filename);
+
+        FileInputStream inputStream = null;
+
+        try {
+            if (file.exists()) {
+
+                BufferedReader reader;
+                inputStream = new FileInputStream(file);
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+                String stringBuilder = reader.readLine();
+
+                while (stringBuilder != null) {
+                    name = stringBuilder.substring(stringBuilder.indexOf(">") + 1, stringBuilder.indexOf("["));
+
+                    hour = Integer.parseInt(stringBuilder.substring(stringBuilder.indexOf("[") + 1, stringBuilder.indexOf(";")));
+                    min = Integer.parseInt(stringBuilder.substring(stringBuilder.indexOf(";") + 1, stringBuilder.indexOf("]")));
+                    id = Integer.parseInt(stringBuilder.substring(stringBuilder.indexOf("]") + 1, stringBuilder.indexOf("]") + 2));
+
+
+                    status = (stringBuilder.substring(stringBuilder.indexOf("<")).compareTo("true") != 0);
+                    newAlarm.setAlarmTime(hour, min);
+                    newAlarm.setAlarmName(name);
+                    newAlarm.setId(id);
+                    newAlarm.setStatus(status);
+                    Bank.addNewAlarmToBank(newAlarm);
+
+                    stringBuilder = reader.readLine();
+                    newAlarm = new Alarm();
+                }//end while
+            }
+            else
+            {
+                Log.e("login activity", "File not found\n");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e("login activity", "File not found\n");
+            return;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("login activity", "File not found\n");
+        }
+
+        return;
+    }
+    //////////////////////
+    private void saveData(Alarm newAlarm) {
+
+        String status = "";
+        //check if the storage is available
+        String state = Environment.getExternalStorageState();
+        if (!Environment.MEDIA_MOUNTED.equals(state)) {
+            //no storage available
+//            Log.e("login activity", "File not found");
+            return;
+        }
+
+        //points to a new file at root dir
+        File file = new File(getExternalFilesDir(null), filename);
+
+        //writing to file operation
+        FileOutputStream outputStream = null;
+        try {
+            file.createNewFile();
+
+            outputStream = new FileOutputStream(file, true);
+
+            outputStream.write((">" + newAlarm.getAlarmName()).getBytes());
+            outputStream.write(("[" + newAlarm.getAlarmHour()).getBytes());
+            outputStream.write((";" + newAlarm.getAlarmMinutes()).getBytes());
+            outputStream.write(( "]" + newAlarm.getId()).getBytes());
+
+
+
+            if ((newAlarm.getAlarmActiveStatus()) == true) {
+                status = "true";
+            } else {
+                status = "false";
+            }
+
+            outputStream.write(("<" + status).getBytes());
+
+            outputStream.write("\n".getBytes());
+            outputStream.flush();
+            outputStream.close();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

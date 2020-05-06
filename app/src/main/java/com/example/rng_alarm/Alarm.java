@@ -69,6 +69,7 @@ public class Alarm {
     public int getId() {
         return id;
     }
+    public void setStatus(boolean status) { active = status; }
 
     /**
      * DEFINITION:  Sets alarm status on or off

@@ -2,13 +2,12 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<item
-    android:title="addAlarm"
-    android:icon="@drawable/ic_add_alarm36"
-    android:id="@+id/addAlarm"
-    app:showAsAction="ifRoom"
-
-/>
+    <item
+        android:title="addAlarm"
+        android:icon="@drawable/ic_add_alarm36"
+        android:id="@+id/addAlarm"
+        app:showAsAction="ifRoom"
+        />
     <item
     android:title="Settings"
         android:id="@+id/action_settings"

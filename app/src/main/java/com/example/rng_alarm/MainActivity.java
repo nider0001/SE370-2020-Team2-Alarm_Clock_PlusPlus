@@ -15,6 +15,8 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,6 +31,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -37,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
     /****** Private members ******/
     private Toolbar myToolbar;
+    //private EditText editNoteText;
+    //private Button sendNotificationBtn;
     private Button addNewAlarm;
     private int launchTimePicker = 1;
     private NotificationHelper mNotificationHelper;
@@ -81,10 +92,11 @@ public class MainActivity extends AppCompatActivity {
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         texCurrDateTime = findViewById(R.id.text_currDateTime);
         texCurrDateTime.setText(currentDate);
+
         //sendNotificationBtn = findViewById(R.id.sendNotificationBtn);
         //editNoteText = findViewById(R.id.noteMessage);
-        mNotificationHelper = new NotificationHelper(this);
 
+        mNotificationHelper = new NotificationHelper(this);
 
         /**
          * DEFINITION:  Event driven function sends notifications
@@ -95,14 +107,6 @@ public class MainActivity extends AppCompatActivity {
          sendNotification(editNoteText.getText().toString());
          });
          **/
-        /**
-         * DEFINITION:  Event driven function opens add alarm activity
-         * PARAMETERS:  None
-         **/
-        addNewAlarm.setOnClickListener((View v) -> {
-            // What happens when the user taps button
-            openAddAlarmActivity();
-        });
 
         /**
          * DEFINITION:  Event driven function toggles alarm
@@ -429,7 +433,6 @@ public class MainActivity extends AppCompatActivity {
                     hour = Integer.parseInt(stringBuilder.substring(stringBuilder.indexOf("[") + 1, stringBuilder.indexOf(";")));
                     min = Integer.parseInt(stringBuilder.substring(stringBuilder.indexOf(";") + 1, stringBuilder.indexOf("]")));
                     id = Integer.parseInt(stringBuilder.substring(stringBuilder.indexOf("]") + 1, stringBuilder.indexOf("]") + 2));
-
 
                     status = (stringBuilder.substring(stringBuilder.indexOf("<")).compareTo("true") != 0);
                     newAlarm.setAlarmTime(hour, min);

@@ -7,12 +7,12 @@
  *  Purpose: Builds the list of all alarms, whether we decide to 
  *           use LL, vectors, or arrays
  *********************************************************************/
-package com.example.rng_alarm;
+package rng.AlarmBankManager;
 import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Intent;
 
-import java.util.*; // Needed for linked list
+import java.util.LinkedList;
+
+import rng.AlarmManager.Alarm;
 
 public class AlarmBank {
     /****** Private members ******/

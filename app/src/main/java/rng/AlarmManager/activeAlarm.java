@@ -6,7 +6,7 @@
  *
  *  Purpose:
  *********************************************************************/
-package com.example.rng_alarm;
+package rng.AlarmManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -15,10 +15,15 @@ import android.os.Bundle;
 import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.rng_alarm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
+
+import rng.AlarmBankManager.AlarmBank;
+import rng.main.MainActivity;
 
 public class activeAlarm extends AppCompatActivity {
 

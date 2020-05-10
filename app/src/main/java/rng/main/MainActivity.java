@@ -6,7 +6,7 @@
  *
  *  Purpose:
  *********************************************************************/
-package com.example.rng_alarm;
+package rng.main;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -31,6 +31,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 
+import rng.AlarmManager.Alarm;
+import rng.NotificationManager.NotificationHelper;
+import com.example.rng_alarm.R;
+import rng.AlarmManager.addAlarm;
+import rng.AlarmManager.alarmReceiver;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,6 +47,8 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
+
+import rng.AlarmBankManager.AlarmBank;
 
 public class MainActivity extends AppCompatActivity {
 

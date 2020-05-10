@@ -1,4 +1,4 @@
-package com.example.rng_alarm;
+package rng.NotificationManager;
 
 import android.annotation.TargetApi;
 import android.app.Notification;

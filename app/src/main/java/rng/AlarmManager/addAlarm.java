@@ -6,7 +6,7 @@
  *
  *  Purpose:
  *********************************************************************/
-package com.example.rng_alarm;
+package rng.AlarmManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +16,10 @@ import android.widget.TimePicker;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.rng_alarm.R;
+
+import rng.AlarmBankManager.AlarmBank;
 
 public class addAlarm extends AppCompatActivity {
     private Button addButton;

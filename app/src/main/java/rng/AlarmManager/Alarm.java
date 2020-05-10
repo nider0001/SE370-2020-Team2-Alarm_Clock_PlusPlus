@@ -8,7 +8,7 @@
  *           the alarm settings and status.
  *********************************************************************/
 
-package com.example.rng_alarm;
+package rng.AlarmManager;
 
 public class Alarm {
     /****** Private members ******/
@@ -44,7 +44,7 @@ public class Alarm {
      * DEFINITION:  Sets alarm name.
      * PARAMETERS:  Name defined by the user
      **/
-    void setAlarmName(String name) {
+    public void setAlarmName(String name) {
         alarm_name = name;
     }
 
@@ -52,7 +52,7 @@ public class Alarm {
      * DEFINITION:  Sets alarm hour and minutes after input validation.
      * PARAMETERS:  hours and minutes
      **/
-    void setAlarmTime(int hour, int minutes) {
+    public void setAlarmTime(int hour, int minutes) {
         if (0 <= hour && 24 >= hour) { alarm_hour = hour; }
         else {
             // Some sort of error message here
@@ -75,7 +75,7 @@ public class Alarm {
      * DEFINITION:  Sets alarm status on or off
      * PARAMETERS:
      **/
-     void toggleAlarm() {
+     public void toggleAlarm() {
          active = !active;
      }
 
@@ -84,7 +84,7 @@ public class Alarm {
      * DEFINITION:  Gets alarm name.
      * PARAMETERS:  None
      **/
-    String getAlarmName() {
+    public String getAlarmName() {
         return alarm_name;
     }
 
@@ -98,7 +98,7 @@ public class Alarm {
      * DEFINITION:  Returns the alarm hours
      * PARAMETERS:  None
      **/
-    int getAlarmHour() {
+    public int getAlarmHour() {
         return alarm_hour;
     }
 
@@ -106,7 +106,7 @@ public class Alarm {
      * DEFINITION:  Returns the alarm minutes
      * PARAMETERS:  None
      **/
-    int getAlarmMinutes() {
+    public int getAlarmMinutes() {
         return alarm_minutes;
     }
 
@@ -114,6 +114,6 @@ public class Alarm {
      * DEFINITION:  Returns the the status of Alarm
      * PARAMETERS:  None
      **/
-     boolean getAlarmActiveStatus() { return active; }
+     public boolean getAlarmActiveStatus() { return active; }
 }
 

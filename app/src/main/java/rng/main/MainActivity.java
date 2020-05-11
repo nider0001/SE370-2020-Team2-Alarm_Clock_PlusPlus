@@ -29,13 +29,8 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
 
-import rng.AlarmManager.Alarm;
-import rng.NotificationManager.NotificationHelper;
 import com.example.rng_alarm.R;
-import rng.AlarmManager.addAlarm;
-import rng.AlarmManager.alarmReceiver;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -49,16 +44,16 @@ import java.util.Calendar;
 import java.util.LinkedList;
 
 import rng.AlarmBankManager.AlarmBank;
+import rng.AlarmManager.Alarm;
+import rng.AlarmManager.addAlarm;
+import rng.AlarmManager.alarmReceiver;
 
 public class MainActivity extends AppCompatActivity {
 
     /****** Private members ******/
     private Toolbar myToolbar;
-    //private EditText editNoteText;
-    //private Button sendNotificationBtn;
     private Button addNewAlarm;
     private int launchTimePicker = 1;
-    private NotificationHelper mNotificationHelper;
     private TextView texCurrDateTime;
     private PendingIntent pendingIntent;
 
@@ -90,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             displayAlarms();
         }
 
-        // UVBAR - Dont now what this is going to be used for...
+        // UVBAR
         myToolbar = findViewById(R.id.toolbarID);
         setSupportActionBar(myToolbar);
 
@@ -100,11 +95,6 @@ public class MainActivity extends AppCompatActivity {
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         texCurrDateTime = findViewById(R.id.text_currDateTime);
         texCurrDateTime.setText(currentDate);
-
-        //sendNotificationBtn = findViewById(R.id.sendNotificationBtn);
-        //editNoteText = findViewById(R.id.noteMessage);
-
-        mNotificationHelper = new NotificationHelper(this);
 
         /**
          * DEFINITION:  Event driven function sends notifications
@@ -223,15 +213,6 @@ public class MainActivity extends AppCompatActivity {
         //starts any activity and waits for a result
         //this also calls for the function onActivityResult after it finishes
         startActivityForResult(timePickIntent, launchTimePicker);
-    }
-
-    /**
-     * DEFINITION:  Sends a notification
-     * PARAMETERS:  Message - manually entered message
-     **/
-    public void sendNotification(String message) {
-        NotificationCompat.Builder nb = mNotificationHelper.getChannelNotification(message);
-        mNotificationHelper.getManager().notify(1, nb.build());
     }
 
     /**
@@ -406,8 +387,6 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
     }
-
-
     private void restoreData() {
 
         Alarm newAlarm = new Alarm();

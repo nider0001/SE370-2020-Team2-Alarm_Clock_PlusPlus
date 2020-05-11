@@ -15,18 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
-        <activity
-            android:name=".activeAlarm"
+            android:name="rng.AlarmManager.activeAlarm"
             android:label="@string/title_activity_active_alarm"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".addAlarm">
+        <activity android:name="rng.AlarmManager.addAlarm">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name="rng.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,7 +31,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".alarmReceiver" />
+        <receiver android:name="rng.AlarmManager.alarmReceiver" />
     </application>
 
 </manifest>
